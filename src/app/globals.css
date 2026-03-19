@@ -10,17 +10,19 @@ html {
 /* Scroll snap — solo desktop */
 @media (min-width: 1024px) {
   html {
-    scroll-snap-type: y mandatory;
+    /* Cambiamos mandatory por proximity para que el browser no fuerce saltos bruscos automáticos */
+    scroll-snap-type: y proximity;
   }
 
   section[data-snap] {
     scroll-snap-align: start;
     min-height: 100vh;
+    /* Reducimos la fricción al hacer scroll */
+    scroll-snap-stop: normal;
   }
 
-  /* Hero y Footer hacen stop completo */
   section[data-snap="always"] {
-    scroll-snap-stop: always;
+    scroll-snap-stop: normal;
   }
 }
 
