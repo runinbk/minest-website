@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Calendar, Layers, MapPin } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
@@ -46,7 +47,7 @@ export function Hero({ siteConfig }: HeroProps) {
 
   return (
     <section id="inicio" className="relative pt-40 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center">
-      <div className="max-w-5xl w-full text-center space-y-8 relative">
+      <div className="max-w-5xl w-full text-center space-y-5 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,16 +57,21 @@ export function Hero({ siteConfig }: HeroProps) {
           {lang === 'ES' ? 'Líderes en Distribución Médica' : 'Leaders in Medical Distribution'}
         </motion.div>
 
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-headline text-6xl md:text-8xl font-bold tracking-tight leading-[1.1]"
+          className="flex justify-center items-center w-full -my-2"
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-            Maines SRL.
-          </span>
-        </motion.h1>
+          <Image
+            src="/assets/logo.png"
+            alt="Maines SRL"
+            width={340}
+            height={130}
+            className="object-contain drop-shadow-2xl"
+            priority
+          />
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}

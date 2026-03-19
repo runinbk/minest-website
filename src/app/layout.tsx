@@ -5,6 +5,10 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Maines S.R.L. | Innovación Médica',
   description: 'Landing page B2B para Maines S.R.L. - Innovación Médica Sin Fronteras',
+  icons: {
+    icon: '/assets/logo.png',
+    apple: '/assets/logo.png',
+  },
 };
 
 export default function RootLayout({
