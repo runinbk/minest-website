@@ -7,8 +7,6 @@ import { translations } from '@/lib/translations';
 import { BrandRow } from '@/lib/supabase';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-// Dynamic import — ssr:false is already set inside JetemaHeroCanvas itself,
-// but wrapping here as well ensures Next.js never tries to render it on the server.
 const JetemaHeroCanvas = dynamic(
   () => import('@/components/3d/JetemaHeroCanvas'),
   { ssr: false },
@@ -19,12 +17,12 @@ interface JetemaHeroProps {
 }
 
 export function JetemaHero({ brand }: JetemaHeroProps) {
-  const { lang }   = useBrandStore();
-  const t          = translations[lang].jetema;
-  const l          = lang === 'ES' ? 'es' : 'en';
-  const isMobile   = useIsMobile();
+  const { lang }    = useBrandStore();
+  const t           = translations[lang].jetema;
+  const l           = lang === 'ES' ? 'es' : 'en';
+  const isMobile    = useIsMobile();
 
-  const tagline    = brand ? (l === 'es' ? brand.tagline_es    : brand.tagline_en)    : t.badge;
+  const tagline     = brand ? (l === 'es' ? brand.tagline_es    : brand.tagline_en)    : t.badge;
   const description = brand ? (l === 'es' ? brand.description_es : brand.description_en) : t.hero.description;
 
   return (
@@ -53,13 +51,9 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
 
       {/* ── Text content ────────────────────────────────────────────────────── */}
       <div className="relative z-10 max-w-5xl w-full">
-        {/*
-          On desktop the text sits left-aligned in roughly the left 55 %.
-          On mobile it's centred over the faint fallback image.
-        */}
         <div className="max-w-xl space-y-6 md:text-left text-center">
           {/* Badge */}
-          <div className="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-400/20 text-purple-600 text-sm font-semibold tracking-wide uppercase">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20 text-[#7C3AED] text-sm font-semibold tracking-wide uppercase">
             {tagline}
           </div>
 
@@ -81,7 +75,7 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
             <h1 className="font-headline text-6xl md:text-8xl font-bold text-slate-900 tracking-tight leading-none">
               {t.hero.title1}
             </h1>
-            <h1 className="font-headline text-6xl md:text-8xl font-bold text-purple-600 tracking-tight leading-none">
+            <h1 className="font-headline text-6xl md:text-8xl font-bold text-[#7C3AED] tracking-tight leading-none">
               {t.hero.title2}
             </h1>
           </div>
@@ -95,7 +89,7 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
           <div className="flex flex-wrap md:justify-start justify-center gap-4 pt-2">
             <a
               href="#catalogo"
-              className="px-8 py-4 bg-purple-600 text-white rounded-full font-semibold shadow-xl shadow-purple-500/25 hover:scale-105 transition-transform"
+              className="px-8 py-4 bg-[#7C3AED] text-white rounded-full font-semibold shadow-xl shadow-[#7C3AED]/25 hover:scale-105 transition-transform"
             >
               {t.hero.cta1}
             </a>

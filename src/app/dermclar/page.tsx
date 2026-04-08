@@ -66,7 +66,16 @@ export default async function DermclarPage() {
       {/* 4. Contacto / Footer */}
       <section id="contacto" data-snap="always">
         <div className="container mx-auto px-4 md:px-0">
-          <FooterCTA siteConfig={siteConfig} socialLinks={socialLinks} logoUrl={logoUrl} />
+          <FooterCTA
+                siteConfig={siteConfig}
+                socialLinks={socialLinks}
+                logoUrl={logoUrl}
+                instagramBadge={{
+                  handle: '@dermclarbolivia',
+                  url: 'https://www.instagram.com/dermclarbolivia',
+                  color: '#38BDF8',
+                }}
+              />
         </div>
       </section>
     </BrandSubLayout>

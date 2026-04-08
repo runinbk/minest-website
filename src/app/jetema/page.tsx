@@ -66,7 +66,16 @@ export default async function JetemaPage() {
       {/* 4. Contacto / Footer */}
       <section id="contacto" data-snap="always">
         <div className="container mx-auto px-4 md:px-0">
-          <FooterCTA siteConfig={siteConfig} socialLinks={socialLinks} logoUrl={logoUrl} />
+          <FooterCTA
+                siteConfig={siteConfig}
+                socialLinks={socialLinks}
+                logoUrl={logoUrl}
+                instagramBadge={{
+                  handle: '@jetemaboliviaoficial',
+                  url: 'https://www.instagram.com/jetemaboliviaoficial/',
+                  color: '#7C3AED',
+                }}
+              />
         </div>
       </section>
     </BrandSubLayout>

@@ -14,10 +14,10 @@ const CATALOG_URL =
 
 const systemIcons = [Shield, Flame, Brain, Bone];
 const systemColors = [
-  'bg-white/60 text-emerald-600',
+  'bg-white/60 text-[#06752E]',
   'bg-white/60 text-lime-600',
   'bg-white/60 text-teal-600',
-  'bg-white/60 text-green-600',
+  'bg-white/60 text-[#06752E]',
 ];
 
 interface XtralifeCatalogProps {
@@ -97,9 +97,9 @@ export function XtralifeCatalog({ brand, products }: XtralifeCatalogProps) {
             return (
               <div
                 key={idx}
-                className="gsap-system-card group relative bg-white/40 backdrop-blur-xl border border-white/60 hover:border-emerald-300 rounded-[2rem] p-8 shadow-xl hover:shadow-2xl hover:bg-white/55 transition-shadow overflow-hidden"
+                className="gsap-system-card group relative bg-white/40 backdrop-blur-xl border border-white/60 hover:border-[#5DF878]/50 rounded-[2rem] p-8 shadow-xl hover:shadow-2xl hover:bg-white/55 transition-shadow overflow-hidden"
               >
-                <div className="absolute -right-4 -top-4 w-24 h-24 bg-emerald-400/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute -right-4 -top-4 w-24 h-24 bg-[#5DF878]/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10 space-y-3">
                   <div
                     className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${colorClass}`}
@@ -130,7 +130,7 @@ export function XtralifeCatalog({ brand, products }: XtralifeCatalogProps) {
                     onClick={() => setActiveTab(product.name)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                       activeTab === product.name
-                        ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/25'
+                        ? 'bg-[#06752E] text-white shadow-md shadow-[#06752E]/25'
                         : 'bg-white/30 text-slate-700 hover:bg-white/50 border border-white/60'
                     }`}
                   >
@@ -141,7 +141,7 @@ export function XtralifeCatalog({ brand, products }: XtralifeCatalogProps) {
 
               {activeProduct && (
                 <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[2rem] p-8 space-y-4 shadow-xl">
-                  <p className="text-sm font-semibold text-emerald-600 uppercase tracking-widest">
+                  <p className="text-sm font-semibold text-[#06752E] uppercase tracking-widest">
                     {l === 'es' ? activeProduct.subtitle_es : activeProduct.subtitle_en}
                   </p>
                   <p className="text-slate-700 text-base font-light leading-relaxed">
@@ -155,7 +155,7 @@ export function XtralifeCatalog({ brand, products }: XtralifeCatalogProps) {
                       <ul className="space-y-1.5">
                         {benefits.map((b, i) => (
                           <li key={i} className="flex items-center gap-2 text-sm text-slate-600">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#5DF878] flex-shrink-0" />
                             {b}
                           </li>
                         ))}
@@ -170,7 +170,7 @@ export function XtralifeCatalog({ brand, products }: XtralifeCatalogProps) {
                   href={CATALOG_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-4 bg-emerald-600 text-white rounded-full font-semibold shadow-xl shadow-emerald-500/25 hover:scale-105 transition-transform"
+                  className="px-8 py-4 bg-[#06752E] text-white rounded-full font-semibold shadow-xl shadow-[#06752E]/25 hover:scale-105 transition-transform"
                 >
                   {t.fullCatalog}
                 </a>

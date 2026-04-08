@@ -12,10 +12,10 @@ void ScrollTrigger;
 const pillarIcons = [ShieldCheck, Microscope, Layers, Target];
 
 const pillarColors = [
-  'bg-white/60 text-purple-600',
+  'bg-white/60 text-[#7C3AED]',
   'bg-white/60 text-fuchsia-600',
-  'bg-white/60 text-violet-600',
-  'bg-white/60 text-indigo-600',
+  'bg-white/60 text-[#7C3AED]',
+  'bg-white/60 text-[#7C3AED]',
 ];
 
 export function JetemaPhilosophy() {

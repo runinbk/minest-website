@@ -6,11 +6,13 @@ import { translations } from '@/lib/translations';
 
 const solutionIcons = [Sparkles, Zap, Droplets, FlaskConical];
 
+// All four slots use Dermclar's exact brand color #38BDF8 with slight opacity
+// variation for visual rhythm — no Tailwind hue names that don't match the brand.
 const solutionColors = [
-  { card: 'hover:border-blue-300', icon: 'bg-blue-500/10 text-blue-600', glow: 'bg-blue-400/10' },
-  { card: 'hover:border-cyan-300', icon: 'bg-cyan-500/10 text-cyan-600', glow: 'bg-cyan-400/10' },
-  { card: 'hover:border-sky-300', icon: 'bg-sky-500/10 text-sky-600', glow: 'bg-sky-400/10' },
-  { card: 'hover:border-indigo-300', icon: 'bg-indigo-500/10 text-indigo-600', glow: 'bg-indigo-400/10' },
+  { card: 'hover:border-[#38BDF8]/50', icon: 'bg-[#38BDF8]/10 text-[#38BDF8]',    glow: 'bg-[#38BDF8]/10' },
+  { card: 'hover:border-[#38BDF8]/40', icon: 'bg-[#38BDF8]/15 text-[#38BDF8]',    glow: 'bg-[#38BDF8]/8'  },
+  { card: 'hover:border-[#38BDF8]/30', icon: 'bg-[#38BDF8]/10 text-[#38BDF8]',    glow: 'bg-[#38BDF8]/10' },
+  { card: 'hover:border-[#38BDF8]/20', icon: 'bg-[#38BDF8]/8  text-[#38BDF8]',    glow: 'bg-[#38BDF8]/8'  },
 ];
 
 export function DermclarSolutions() {
@@ -36,7 +38,7 @@ export function DermclarSolutions() {
         {/* Solution cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {t.items.map((item, idx) => {
-            const Icon = solutionIcons[idx] ?? Sparkles;
+            const Icon   = solutionIcons[idx] ?? Sparkles;
             const colors = solutionColors[idx] ?? solutionColors[0];
 
             return (

@@ -28,14 +28,14 @@ export function DermclarProtocols() {
           {t.steps.map((step, idx) => (
             <div
               key={idx}
-              className="group relative bg-white/40 backdrop-blur-xl border border-white/60 hover:border-blue-300 rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl hover:bg-white/55 transition-all overflow-hidden flex flex-col gap-4"
+              className="group relative bg-white/40 backdrop-blur-xl border border-white/60 hover:border-[#38BDF8]/40 rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl hover:bg-white/55 transition-all overflow-hidden flex flex-col gap-4"
             >
               {/* Glow */}
-              <div className="absolute -right-4 -top-4 w-28 h-28 bg-blue-400/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute -right-4 -top-4 w-28 h-28 bg-[#38BDF8]/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div className="relative z-10">
                 {/* Step number */}
-                <span className="font-headline text-5xl font-bold text-blue-500/20 leading-none select-none">
+                <span className="font-headline text-5xl font-bold text-[#38BDF8]/30 leading-none select-none">
                   {step.step}
                 </span>
 
@@ -47,7 +47,7 @@ export function DermclarProtocols() {
 
                 {/* Connector line — hidden on last item and on mobile */}
                 {idx < t.steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-px bg-blue-200/60 -translate-y-1/2" />
+                  <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-px bg-[#38BDF8]/40 -translate-y-1/2" />
                 )}
               </div>
             </div>

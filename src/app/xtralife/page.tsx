@@ -59,7 +59,16 @@ export default async function XtralifePage() {
       {/* 3. Contacto / Footer */}
       <section id="contacto" data-snap="always">
         <div className="container mx-auto px-4 md:px-0">
-          <FooterCTA siteConfig={siteConfig} socialLinks={socialLinks} logoUrl={logoUrl} />
+          <FooterCTA
+                siteConfig={siteConfig}
+                socialLinks={socialLinks}
+                logoUrl={logoUrl}
+                instagramBadge={{
+                  handle: '@xtralifeboliviaoficial',
+                  url: 'https://www.instagram.com/xtralifeboliviaoficial',
+                  color: '#06752E',
+                }}
+              />
         </div>
       </section>
     </BrandSubLayout>

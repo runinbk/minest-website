@@ -58,7 +58,16 @@ export default async function Home() {
         {/* 4. Contacto / Footer */}
         <section id="contacto" data-snap="always">
           <div className="container mx-auto px-4 md:px-0">
-            <FooterCTA siteConfig={siteConfig} socialLinks={socialLinks} logoUrl={logoUrl} />
+            <FooterCTA
+              siteConfig={siteConfig}
+              socialLinks={socialLinks}
+              logoUrl={logoUrl}
+              instagramBadge={{
+                handle: '@mainessrl',
+                url: 'https://www.instagram.com/mainessrl/',
+                color: '#1B3A6B',
+              }}
+            />
           </div>
         </section>
 

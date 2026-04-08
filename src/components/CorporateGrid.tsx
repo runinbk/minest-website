@@ -16,7 +16,7 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 const bentoConfig = [
-  { size: "col-span-1 md:col-span-2 row-span-1", color: "bg-blue-500/10" },
+  { size: "col-span-1 md:col-span-2 row-span-1", color: "bg-[#1B3A6B]/10" },
   { size: "col-span-1 row-span-1", color: "bg-emerald-500/10" },
   { size: "col-span-1 row-span-1", color: "bg-purple-500/10" },
   { size: "col-span-1 md:col-span-2 row-span-1", color: "bg-amber-500/10" },

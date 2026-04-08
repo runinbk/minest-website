@@ -26,7 +26,7 @@ export function XtralifeHero({ brand }: XtralifeHeroProps) {
     >
       <div className="max-w-5xl w-full text-center space-y-6">
         {/* Badge */}
-        <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-600 text-sm font-semibold tracking-wide uppercase">
+        <div className="inline-block px-4 py-1.5 rounded-full bg-[#06752E]/10 border border-[#5DF878]/30 text-[#06752E] text-sm font-semibold tracking-wide uppercase">
           {tagline}
         </div>
 
@@ -48,7 +48,7 @@ export function XtralifeHero({ brand }: XtralifeHeroProps) {
           <h1 className="font-headline text-6xl md:text-8xl font-bold text-slate-900 tracking-tight leading-none">
             {t.hero.title1}
           </h1>
-          <h1 className="font-headline text-6xl md:text-8xl font-bold text-emerald-600 tracking-tight leading-none">
+          <h1 className="font-headline text-6xl md:text-8xl font-bold text-[#06752E] tracking-tight leading-none">
             {t.hero.title2}
           </h1>
         </div>
@@ -62,7 +62,7 @@ export function XtralifeHero({ brand }: XtralifeHeroProps) {
         <div className="flex flex-wrap justify-center gap-4 pt-2">
           <a
             href="#catalogo"
-            className="px-8 py-4 bg-emerald-600 text-white rounded-full font-semibold shadow-xl shadow-emerald-500/25 hover:scale-105 transition-transform"
+            className="px-8 py-4 bg-[#06752E] text-white rounded-full font-semibold shadow-xl shadow-[#06752E]/25 hover:scale-105 transition-transform"
           >
             {t.hero.cta1}
           </a>
