@@ -59,7 +59,7 @@ export function JetemaCatalog({ brand: _brand, products }: JetemaCatalogProps) {
                     onClick={() => setActiveTab(product.name)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                       activeTab === product.name
-                        ? 'bg-purple-600 text-white shadow-md shadow-purple-500/25'
+                        ? 'bg-[#7C3AED] text-white shadow-md shadow-[#7C3AED]/25'
                         : 'bg-white/30 text-slate-700 hover:bg-white/50 border border-white/60'
                     }`}
                   >
@@ -71,7 +71,7 @@ export function JetemaCatalog({ brand: _brand, products }: JetemaCatalogProps) {
               {/* Active product detail */}
               {activeProduct && (
                 <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[2rem] p-8 space-y-4 shadow-xl">
-                  <p className="text-sm font-semibold text-purple-600 uppercase tracking-widest">
+                  <p className="text-sm font-semibold text-[#7C3AED] uppercase tracking-widest">
                     {l === 'es' ? activeProduct.subtitle_es : activeProduct.subtitle_en}
                   </p>
                   <p className="text-slate-700 text-base font-light leading-relaxed">
@@ -86,7 +86,7 @@ export function JetemaCatalog({ brand: _brand, products }: JetemaCatalogProps) {
                       <ul className="space-y-1.5">
                         {benefits.map((b, i) => (
                           <li key={i} className="flex items-center gap-2 text-sm text-slate-600">
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] flex-shrink-0" />
                             {b}
                           </li>
                         ))}
@@ -102,7 +102,7 @@ export function JetemaCatalog({ brand: _brand, products }: JetemaCatalogProps) {
                   href={CATALOG_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-4 bg-purple-600 text-white rounded-full font-semibold shadow-xl shadow-purple-500/25 hover:scale-105 transition-transform"
+                  className="px-8 py-4 bg-[#7C3AED] text-white rounded-full font-semibold shadow-xl shadow-[#7C3AED]/25 hover:scale-105 transition-transform"
                 >
                   {t.fullCatalog}
                 </a>
@@ -117,7 +117,7 @@ export function JetemaCatalog({ brand: _brand, products }: JetemaCatalogProps) {
 
             {/* Right: product image */}
             <div className="relative aspect-square bg-white/20 backdrop-blur-2xl border border-white/40 rounded-[3rem] shadow-2xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-transparent pointer-events-none z-10" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/10 to-transparent pointer-events-none z-10" />
               {activeProduct?.image_url ? (
                 <img
                   key={activeProduct.image_url}
@@ -126,7 +126,7 @@ export function JetemaCatalog({ brand: _brand, products }: JetemaCatalogProps) {
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-purple-900/30">
+                <div className="absolute inset-0 flex items-center justify-center bg-[#7C3AED]/20">
                   {_brand?.logo_url && (
                     <img
                       src={_brand.logo_url}

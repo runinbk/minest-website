@@ -26,7 +26,7 @@ export function DermclarHero({ brand }: DermclarHeroProps) {
     >
       <div className="max-w-5xl w-full text-center space-y-6">
         {/* Badge */}
-        <div className="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-600 text-sm font-semibold tracking-wide uppercase">
+        <div className="inline-block px-4 py-1.5 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 text-[#38BDF8] text-sm font-semibold tracking-wide uppercase">
           {tagline}
         </div>
 
@@ -48,7 +48,7 @@ export function DermclarHero({ brand }: DermclarHeroProps) {
           <h1 className="font-headline text-6xl md:text-8xl font-bold text-slate-900 tracking-tight leading-none">
             {t.hero.title1}
           </h1>
-          <h1 className="font-headline text-6xl md:text-8xl font-bold text-blue-600 tracking-tight leading-none">
+          <h1 className="font-headline text-6xl md:text-8xl font-bold text-[#38BDF8] tracking-tight leading-none">
             {t.hero.title2}
           </h1>
         </div>
@@ -62,7 +62,7 @@ export function DermclarHero({ brand }: DermclarHeroProps) {
         <div className="flex flex-wrap justify-center gap-4 pt-2">
           <a
             href="#soluciones"
-            className="px-8 py-4 bg-blue-600 text-white rounded-full font-semibold shadow-xl shadow-blue-500/25 hover:scale-105 transition-transform"
+            className="px-8 py-4 bg-[#38BDF8] text-white rounded-full font-semibold shadow-xl shadow-[#38BDF8]/25 hover:scale-105 transition-transform"
           >
             {t.hero.cta1}
           </a>

@@ -7,14 +7,16 @@ import { Send, MapPin, Phone, Mail, Instagram, Facebook, ArrowRight, MessageCirc
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { SocialLinkRow } from '@/lib/supabase';
+import { InstagramBadge } from '@/components/shared/InstagramBadge';
 
 interface FooterCTAProps {
   siteConfig: Record<string, { es: string; en: string }>;
   socialLinks: SocialLinkRow[];
   logoUrl?: string;
+  instagramBadge?: { handle: string; url: string; color: string };
 }
 
-export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) {
+export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: FooterCTAProps) {
   const { lang } = useBrandStore();
   const t = translations[lang].footer;
   const nav = translations[lang].nav;
@@ -67,11 +69,20 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) 
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-emerald-500 text-white rounded-full font-semibold shadow-lg hover:bg-emerald-600 transition-all hover:scale-105"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#06752E] text-white rounded-full font-semibold shadow-lg hover:bg-[#06752E]/80 transition-all hover:scale-105"
             >
               <MessageCircle className="w-5 h-5" />
               {ctaBtnWa}
             </a>
+
+            {/* Instagram badge — shown when a brand handle is provided */}
+            {instagramBadge && (
+              <InstagramBadge
+                handle={instagramBadge.handle}
+                url={instagramBadge.url}
+                color={instagramBadge.color}
+              />
+            )}
           </div>
         </div>
 
@@ -155,7 +166,7 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) 
                   <Facebook className="w-4 h-4" />
                 </a>
               ))}
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/60 rounded-full flex items-center justify-center text-slate-600 hover:bg-emerald-500 hover:text-white transition-all shadow-sm">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/60 rounded-full flex items-center justify-center text-slate-600 hover:bg-[#06752E] hover:text-white transition-all shadow-sm">
                 <MessageCircle className="w-4 h-4" />
               </a>
             </div>

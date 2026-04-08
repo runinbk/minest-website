@@ -15,15 +15,15 @@ function TikTokIcon({ className }: { className?: string }) {
 }
 
 const brandAccent: Record<string, string> = {
-  dermclar: 'text-blue-600',
-  xtralife: 'text-emerald-600',
-  jetema: 'text-purple-600',
+  dermclar: 'text-[#38BDF8]',
+  xtralife: 'text-[#06752E]',
+  jetema:   'text-[#7C3AED]',
 };
 
 const brandBorder: Record<string, string> = {
-  dermclar: 'hover:border-blue-300',
-  xtralife: 'hover:border-emerald-300',
-  jetema: 'hover:border-purple-300',
+  dermclar: 'hover:border-[#38BDF8]/40',
+  xtralife: 'hover:border-[#5DF878]/50',
+  jetema:   'hover:border-[#7C3AED]/40',
 };
 
 interface BrandPortalProps {
