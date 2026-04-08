@@ -1,20 +1,23 @@
-"use client";
+'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Shield, Flame, Brain, Bone, ChevronRight } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { BrandRow, BrandProductRow } from '@/lib/supabase';
+import { gsap, useGSAP, ScrollTrigger } from '@/lib/gsap-setup';
+
+void ScrollTrigger;
 
 const CATALOG_URL =
   'https://ggkwhnuqwktfoynxkgsi.supabase.co/storage/v1/object/public/brand-assets/catalogo-maines.pdf';
 
 const systemIcons = [Shield, Flame, Brain, Bone];
 const systemColors = [
-  'bg-emerald-500/10 text-emerald-600 border-emerald-200/60',
-  'bg-lime-500/10 text-lime-600 border-lime-200/60',
-  'bg-teal-500/10 text-teal-600 border-teal-200/60',
-  'bg-green-500/10 text-green-600 border-green-200/60',
+  'bg-white/60 text-emerald-600',
+  'bg-white/60 text-lime-600',
+  'bg-white/60 text-teal-600',
+  'bg-white/60 text-green-600',
 ];
 
 interface XtralifeCatalogProps {
@@ -23,20 +26,51 @@ interface XtralifeCatalogProps {
 }
 
 export function XtralifeCatalog({ brand, products }: XtralifeCatalogProps) {
+  const containerRef = useRef<HTMLElement>(null);
   const { lang } = useBrandStore();
   const t = translations[lang].xtralife.catalog;
   const l = lang === 'ES' ? 'es' : 'en';
 
   const [activeTab, setActiveTab] = useState(products[0]?.name ?? null);
 
-  const activeProduct = products.find((p) => p.name === activeTab) ?? products[0] ?? null;
+  const activeProduct  = products.find((p) => p.name === activeTab) ?? products[0] ?? null;
   const benefits: string[] = activeProduct
     ? ((l === 'es' ? activeProduct.benefits_es : activeProduct.benefits_en) as string[]) ?? []
     : [];
 
+  // ─── GSAP: clip-path circle reveal on system cards ──────────────────────
+  //
+  // Animates from a point at the bottom-center of each card expanding outward.
+  // clip-path is a paint property — no layout thrash, hardware-accelerated.
+  // Rule: only x, y, scale, autoAlpha for transform animations; clip-path is
+  // a CSS paint property, not a layout property, so this is allowed.
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
+
+      gsap.fromTo(
+        '.gsap-system-card',
+        { clipPath: 'circle(0% at 50% 100%)' },
+        {
+          clipPath: 'circle(150% at 50% 100%)',
+          stagger: 0.12,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.gsap-system-grid',
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        },
+      );
+    },
+    { scope: containerRef },
+  );
+
   return (
     <section
       id="catalogo"
+      ref={containerRef}
       className="relative min-h-screen py-32 px-6 flex flex-col justify-center scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto w-full">
@@ -50,24 +84,34 @@ export function XtralifeCatalog({ brand, products }: XtralifeCatalogProps) {
           </p>
         </div>
 
-        {/* Body systems grid — static cards from translations */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {/* ── Body systems grid — cards revealed via clip-path ─────────────── */}
+        {/*
+          .gsap-system-grid is the ScrollTrigger trigger element.
+          Each .gsap-system-card gets the clip-path fromTo animation.
+        */}
+        <div className="gsap-system-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {t.systems.map((system, idx) => {
-            const Icon = systemIcons[idx] ?? Shield;
+            const Icon       = systemIcons[idx] ?? Shield;
             const colorClass = systemColors[idx] ?? systemColors[0];
 
             return (
               <div
                 key={idx}
-                className={`group relative bg-white/40 backdrop-blur-xl border border-white/60 hover:border-emerald-300 rounded-[2rem] p-8 shadow-xl hover:shadow-2xl hover:bg-white/55 transition-all overflow-hidden`}
+                className="gsap-system-card group relative bg-white/40 backdrop-blur-xl border border-white/60 hover:border-emerald-300 rounded-[2rem] p-8 shadow-xl hover:shadow-2xl hover:bg-white/55 transition-shadow overflow-hidden"
               >
                 <div className="absolute -right-4 -top-4 w-24 h-24 bg-emerald-400/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10 space-y-3">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm bg-white/60 ${colorClass}`}>
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-sm ${colorClass}`}
+                  >
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-headline font-bold text-slate-900">{system.name}</h3>
-                  <p className="text-slate-600 text-xs leading-relaxed font-light">{system.desc}</p>
+                  <h3 className="text-base font-headline font-bold text-slate-900">
+                    {system.name}
+                  </h3>
+                  <p className="text-slate-600 text-xs leading-relaxed font-light">
+                    {system.desc}
+                  </p>
                 </div>
               </div>
             );
