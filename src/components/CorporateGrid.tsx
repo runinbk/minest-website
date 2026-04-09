@@ -2,11 +2,11 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { ShieldCheck, Star, Zap, Gem, Target, Eye } from 'lucide-react';
+import { ShieldCheck, Star, Zap, Gem, Target, Eye, LucideIcon } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { PillarRow } from '@/lib/supabase';
 
-const iconMap: Record<string, React.ElementType> = {
+const iconMap: Record<string, LucideIcon> = {
   'shield-check': ShieldCheck,
   'star': Star,
   'zap': Zap,
@@ -54,9 +54,9 @@ export function CorporateGrid({ pillars, siteConfig }: CorporateGridProps) {
   ];
 
   return (
-    <section id="nosotros" className="py-24 pt-40 px-6 max-w-7xl mx-auto scroll-mt-40">
-      <div className="text-center space-y-4 mb-16 flex flex-col items-center justify-center">
-        <h2 className="font-headline text-5xl md:text-7xl font-bold text-slate-900 tracking-tight">{sectionTitle}</h2>
+    <section id="nosotros" className="min-h-screen py-16 px-6 max-w-7xl mx-auto flex flex-col justify-center">
+      <div className="text-center space-y-4 mb-10 md:mb-16 flex flex-col items-center justify-center">
+        <h2 className="font-headline text-5xl md:text-6xl font-bold text-slate-900 tracking-tight">{sectionTitle}</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

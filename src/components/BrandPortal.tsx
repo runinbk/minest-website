@@ -37,11 +37,11 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
   const l = lang === 'ES' ? 'es' : 'en';
 
   return (
-    <section id="marcas" className="relative min-h-screen py-32 px-6 scroll-mt-24">
-      <div className="max-w-7xl mx-auto">
+    <section id="marcas" className="relative min-h-[90vh] py-16 px-6 flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto w-full mt-10 md:mt-0">
         {/* Header */}
-        <div className="text-center space-y-4 mb-20">
-          <h2 className="font-headline text-5xl md:text-7xl font-bold text-slate-900 tracking-tight">
+        <div className="text-center space-y-4 mb-12">
+          <h2 className="font-headline text-5xl md:text-6xl font-bold text-slate-900 tracking-tight">
             {t.portalTitle}
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
@@ -76,11 +76,11 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
                 </Link>
 
                 {/* Brand logo */}
-                <div className="bg-white/80 px-4 py-2 rounded-2xl shadow-sm mb-6 transition-transform group-hover:scale-110 flex items-center justify-center">
+                <div className="bg-white/80 px-4 py-2 rounded-2xl shadow-sm mb-4 transition-transform group-hover:scale-110 flex items-center justify-center">
                   <img
                     src={brand.logo_url || undefined}
                     alt={brand.name}
-                    className="h-20 w-auto object-contain"
+                    className="h-16 w-auto object-contain"
                   />
                 </div>
 
@@ -124,7 +124,7 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
                 {/* CTA link to sub-page */}
                 <Link
                   href={`/${brand.slug}`}
-                  className={`mt-auto inline-flex items-center gap-2 font-bold text-sm ${accentClass} hover:gap-3 transition-all`}
+                  className={`mt-4 inline-flex items-center gap-2 font-bold text-sm ${accentClass} hover:gap-3 transition-all`}
                 >
                   {t.visitBrand}
                   <ArrowUpRight className="w-4 h-4" />

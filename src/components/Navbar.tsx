@@ -1,7 +1,7 @@
-
 "use client";
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useBrandStore } from '@/store/useBrandStore';
 import { cn } from '@/lib/utils';
 import { Activity, ShieldCheck, HeartPulse, Menu } from 'lucide-react';
@@ -23,6 +23,19 @@ export function Navbar({ logoUrl }: NavbarProps) {
   const logoSrc = logoUrl || 'https://ggkwhnuqwktfoynxkgsi.supabase.co/storage/v1/object/public/brand-assets/logomainesENV06.png';
   const t = translations[lang].nav;
 
+  // Lógica de scroll para ocultar narvar al bajar y mostrar al subir
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious();
+    if (latest > previous! && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
+
   const navLinks = [
     { label: t.about, href: "#nosotros" },
     { label: t.brands, href: "#marcas" },
@@ -35,8 +48,9 @@ export function Navbar({ logoUrl }: NavbarProps) {
         {!isBrandSectionInView && (
           <motion.nav
             initial={{ y: -100, x: '-50%', opacity: 0 }}
-            animate={{ y: 0, x: '-50%', opacity: 1 }}
+            animate={{ y: hidden ? -100 : 0, x: '-50%', opacity: hidden ? 0 : 1 }}
             exit={{ y: -100, x: '-50%', opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl px-6 py-4 bg-white/40 backdrop-blur-xl border border-white/60 shadow-xl rounded-full flex items-center justify-between"
           >
             <div className="flex items-center gap-3">
@@ -109,8 +123,9 @@ export function Navbar({ logoUrl }: NavbarProps) {
         {isBrandSectionInView && (
           <motion.nav
             initial={{ y: -100, x: '-50%', opacity: 0 }}
-            animate={{ y: 24, x: '-50%', opacity: 1 }}
+            animate={{ y: hidden ? -100 : 24, x: '-50%', opacity: hidden ? 0 : 1 }}
             exit={{ y: -100, x: '-50%', opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed top-0 left-1/2 -translate-x-1/2 z-50 p-1.5 bg-white/60 backdrop-blur-2xl border border-white/80 shadow-2xl rounded-full flex items-center gap-1"
           >
             {brands.map((brand) => (

@@ -55,9 +55,9 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
   const facebookLinks = socialLinks.filter((s) => s.platform === 'facebook');
 
   return (
-    <footer id="contacto" className="relative mt-12 pt-32 scroll-mt-40">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start px-6 mb-24 mt-8">
-        <div className="space-y-12">
+    <footer id="contacto" className="relative pt-12 flex flex-col min-h-screen justify-center">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-6 mb-16 mt-8">
+        <div className="space-y-8">
           <div className="space-y-6">
             <h2 className="font-headline text-5xl md:text-6xl font-bold text-primary leading-tight">
               {ctaTitle}
@@ -147,8 +147,8 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
         </motion.div>
       </div>
 
-      <div className="bg-white/10 backdrop-blur-md border-t border-white/20 py-24 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="bg-white/10 backdrop-blur-md border-t border-white/20 py-10 px-6 mt-auto">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               {logoUrl && <img src={logoUrl} className="h-10 w-auto" alt="Maines" />}
@@ -230,7 +230,7 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-24 pt-8 border-t border-slate-200/60 flex justify-center items-center text-slate-500 text-sm">
+        <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-200/60 flex justify-center items-center text-slate-500 text-sm">
           <p>{copyright}</p>
         </div>
       </div>

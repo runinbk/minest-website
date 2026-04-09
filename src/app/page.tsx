@@ -39,24 +39,24 @@ export default async function Home() {
       <div className="relative z-10">
 
         {/* 1. Hero corporativo */}
-        <section id="inicio" data-snap="always">
+        <section id="inicio">
           <Hero siteConfig={siteConfig} />
         </section>
 
         {/* 2. Nosotros — 4 pilares + misión/visión */}
-        <section id="nosotros" data-snap>
+        <section id="nosotros">
           <div className="container mx-auto px-4 md:px-0">
             <CorporateGrid pillars={pillars} siteConfig={siteConfig} />
           </div>
         </section>
 
         {/* 3. Portal de Marcas — enlaza a /jetema, /dermclar, /xtralife */}
-        <section id="marcas" data-snap>
+        <section id="marcas">
           <BrandPortal brands={brands} socialLinks={socialLinks} />
         </section>
 
         {/* 4. Contacto / Footer */}
-        <section id="contacto" data-snap="always">
+        <section id="contacto">
           <div className="container mx-auto px-4 md:px-0">
             <FooterCTA
               siteConfig={siteConfig}
