@@ -59,10 +59,10 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-6 mb-16 mt-8">
         <div className="space-y-8">
           <div className="space-y-6">
-            <h2 className="font-headline text-5xl md:text-6xl font-bold text-primary leading-tight">
+            <h2 className="font-headline text-5xl md:text-6xl font-bold text-white leading-tight">
               {ctaTitle}
             </h2>
-            <p className="text-xl text-slate-600 font-light max-w-md">
+            <p className="text-xl text-slate-300 font-light max-w-md">
               {ctaSubtitle}
             </p>
             <a
@@ -90,51 +90,51 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-white/40 backdrop-blur-3xl border border-white/80 p-10 rounded-[3rem] shadow-2xl relative"
+          className="bg-white/5 backdrop-blur-3xl border border-white/10 p-10 rounded-[3rem] shadow-2xl relative"
         >
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-accent/20 blur-[80px] rounded-full pointer-events-none" />
 
           <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">{t.form.name}</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 ml-1">{t.form.name}</label>
                 <input
                   type="text"
                   placeholder={t.form.placeholderName}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-white/50 border border-white/60 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-slate-400"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">{t.form.institution}</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 ml-1">{t.form.institution}</label>
                 <input
                   type="text"
                   placeholder={t.form.placeholderInst}
                   value={formData.institution}
                   onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                  className="w-full bg-white/50 border border-white/60 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-slate-400"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">{t.form.email}</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-400 ml-1">{t.form.email}</label>
               <input
                 type="email"
                 placeholder={t.form.placeholderEmail}
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full bg-white/50 border border-white/60 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                className="w-full bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder-slate-400"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">{t.form.message}</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-400 ml-1">{t.form.message}</label>
               <textarea
                 placeholder={t.form.placeholderMsg}
                 rows={4}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full bg-white/50 border border-white/60 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+                className="w-full bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none placeholder-slate-400"
               ></textarea>
             </div>
             <button
@@ -154,30 +154,30 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
               {logoUrl && <img src={logoUrl} className="h-10 w-auto" alt="Maines" />}
               <span className="text-2xl font-bold text-yellow-600 tracking-tight">Maines S.R.L.</span>
             </div>
-            <p className="text-slate-600 font-light leading-relaxed">{t.columns.brand}</p>
+            <p className="text-slate-300 font-light leading-relaxed">{t.columns.brand}</p>
             <div className="flex gap-4">
               {instagramLinks.slice(0, 1).map((s) => (
-                <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/60 rounded-full flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition-all shadow-sm">
+                <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary transition-all shadow-sm">
                   <Instagram className="w-4 h-4" />
                 </a>
               ))}
               {facebookLinks.slice(0, 1).map((s) => (
-                <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/60 rounded-full flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition-all shadow-sm">
+                <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary transition-all shadow-sm">
                   <Facebook className="w-4 h-4" />
                 </a>
               ))}
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/60 rounded-full flex items-center justify-center text-slate-600 hover:bg-[#06752E] hover:text-white transition-all shadow-sm">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-[#06752E] transition-all shadow-sm">
                 <MessageCircle className="w-4 h-4" />
               </a>
             </div>
           </div>
 
           <div className="space-y-6 flex flex-col items-start md:items-center md:mx-auto">
-            <h3 className="font-headline font-bold text-slate-900 text-lg uppercase tracking-widest text-left md:text-center">{t.columns.company}</h3>
+            <h3 className="font-headline font-bold text-white text-lg uppercase tracking-widest text-left md:text-center">{t.columns.company}</h3>
             <ul className="space-y-4 flex flex-col items-start">
               {[nav.about, nav.brands, nav.contact].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-slate-600 hover:text-primary transition-colors flex items-center gap-2 group">
+                  <a href="#" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2 group">
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {link}
                   </a>
@@ -189,15 +189,15 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
 
 
           <div className="space-y-6">
-            <h3 className="font-headline font-bold text-slate-900 text-lg uppercase tracking-widest">{t.columns.contact}</h3>
-            <div className="space-y-4 text-slate-600 font-light">
+            <h3 className="font-headline font-bold text-white text-lg uppercase tracking-widest">{t.columns.contact}</h3>
+            <div className="space-y-4 text-slate-300 font-light">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-1" />
                 <a
                   href={mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-blue-600 hover:underline hover:opacity-80 transition-all"
+                  className="hover:text-blue-400 hover:underline hover:opacity-80 transition-all"
                 >
                   {address}
                 </a>
@@ -230,7 +230,7 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: 
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-200/60 flex justify-center items-center text-slate-500 text-sm">
+        <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-700/60 flex justify-center items-center text-slate-400 text-sm">
           <p>{copyright}</p>
         </div>
       </div>
