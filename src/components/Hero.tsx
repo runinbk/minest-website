@@ -101,7 +101,7 @@ export function Hero({ siteConfig }: HeroProps) {
           GSAP's useGSAP (scoped to containerRef) targets these spans.
           No framer-motion on these elements — GSAP has full ownership.
         */}
-        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-300 font-light leading-relaxed">
+        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 font-light leading-relaxed">
           {words.map((word, i) => (
             <span
               key={i}
@@ -118,7 +118,7 @@ export function Hero({ siteConfig }: HeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-xl mx-auto text-base text-slate-400 font-light"
+          className="max-w-xl mx-auto text-base text-slate-500 font-light"
         >
           {headline}
         </motion.p>
@@ -138,7 +138,7 @@ export function Hero({ siteConfig }: HeroProps) {
           </a>
           <a
             href="#contacto"
-            className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-semibold hover:bg-white/20 transition-all text-center"
+            className="px-8 py-4 bg-white/40 backdrop-blur-md border border-white/60 text-slate-900 rounded-full font-semibold hover:bg-white/60 transition-all text-center"
           >
             {lang === 'ES' ? 'Contacto' : 'Contact'}
           </a>
@@ -172,14 +172,14 @@ export function Hero({ siteConfig }: HeroProps) {
                 ease: 'easeInOut',
                 delay: idx * 0.5,
               }}
-              className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white/30 backdrop-blur-xl border border-white/50 p-6 rounded-2xl shadow-2xl flex flex-col items-center gap-2"
             >
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-primary shadow-inner">
+              <div className="w-12 h-12 bg-white/50 rounded-xl flex items-center justify-center text-primary shadow-inner">
                 <stat.icon className="w-6 h-6" />
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold font-headline text-white">{stat.value}</div>
-                <div className="text-xs font-medium text-slate-400 uppercase tracking-wider">{stat.text}</div>
+                <div className="text-2xl font-bold font-headline text-slate-900">{stat.value}</div>
+                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">{stat.text}</div>
               </div>
             </motion.div>
           </div>

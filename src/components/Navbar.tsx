@@ -51,7 +51,7 @@ export function Navbar({ logoUrl }: NavbarProps) {
             animate={{ y: hidden ? -100 : 0, x: '-50%', opacity: hidden ? 0 : 1 }}
             exit={{ y: -100, x: '-50%', opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl px-6 py-4 bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-full flex items-center justify-between"
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl px-6 py-4 bg-white/40 backdrop-blur-xl border border-white/60 shadow-xl rounded-full flex items-center justify-between"
           >
             <div className="flex items-center gap-3">
               <img
@@ -67,7 +67,7 @@ export function Navbar({ logoUrl }: NavbarProps) {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                  className="text-sm font-medium text-slate-600 hover:text-primary transition-colors"
                 >
                   {item.label}
                 </a>
@@ -77,7 +77,7 @@ export function Navbar({ logoUrl }: NavbarProps) {
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => setLang(lang === 'ES' ? 'EN' : 'ES')}
-                className="hidden sm:block px-6 py-2 bg-white/10 rounded-full text-sm font-bold text-white hover:bg-white/20 transition-colors border border-white/20"
+                className="hidden sm:block px-6 py-2 bg-white/50 rounded-full text-sm font-bold text-slate-700 hover:bg-white/80 hover:text-primary transition-colors border border-slate-200"
               >
                 {lang} | {lang === 'ES' ? 'EN' : 'ES'}
               </button>
@@ -89,7 +89,7 @@ export function Navbar({ logoUrl }: NavbarProps) {
                       <Menu className="w-6 h-6" />
                     </button>
                   </SheetTrigger>
-                  <SheetContent side="right" className="bg-[#0B152A]/95 backdrop-blur-xl border-l border-white/10">
+                  <SheetContent side="right" className="bg-white/95 backdrop-blur-xl">
                     <SheetHeader className="sr-only">
                       <SheetTitle>Navigation Menu</SheetTitle>
                       <SheetDescription>Access Maines corporate sections</SheetDescription>
@@ -100,13 +100,13 @@ export function Navbar({ logoUrl }: NavbarProps) {
                         <span className="text-lg font-bold text-yellow-600">Maines S.R.L.</span>
                       </div>
                       {navLinks.map((item) => (
-                        <a key={item.label} href={item.href} className="text-2xl font-headline font-bold text-white text-left">
+                        <a key={item.label} href={item.href} className="text-2xl font-headline font-bold text-slate-800 text-left">
                           {item.label}
                         </a>
                       ))}
                       <button 
                         onClick={() => setLang(lang === 'ES' ? 'EN' : 'ES')}
-                        className="w-full bg-white/10 text-white hover:bg-white/20 py-4 rounded-2xl font-bold mt-4 transition-colors"
+                        className="w-full bg-slate-100 text-slate-700 hover:bg-slate-200 py-4 rounded-2xl font-bold mt-4 transition-colors"
                       >
                         {lang} | {lang === 'ES' ? 'EN' : 'ES'}
                       </button>
@@ -126,7 +126,7 @@ export function Navbar({ logoUrl }: NavbarProps) {
             animate={{ y: hidden ? -100 : 24, x: '-50%', opacity: hidden ? 0 : 1 }}
             exit={{ y: -100, x: '-50%', opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed top-0 left-1/2 -translate-x-1/2 z-50 p-1.5 bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-full flex items-center gap-1"
+            className="fixed top-0 left-1/2 -translate-x-1/2 z-50 p-1.5 bg-white/60 backdrop-blur-2xl border border-white/80 shadow-2xl rounded-full flex items-center gap-1"
           >
             {brands.map((brand) => (
               <button
@@ -134,7 +134,7 @@ export function Navbar({ logoUrl }: NavbarProps) {
                 onClick={() => setActiveBrand(brand.id)}
                 className={cn(
                   "relative flex items-center gap-2 px-4 md:px-6 py-2.5 rounded-full text-xs md:text-sm font-medium transition-all duration-300",
-                  activeBrand === brand.id ? "text-white" : "text-slate-300 hover:bg-white/10"
+                  activeBrand === brand.id ? "text-white" : "text-slate-600 hover:bg-white/40"
                 )}
               >
                 {activeBrand === brand.id && (
@@ -144,14 +144,14 @@ export function Navbar({ logoUrl }: NavbarProps) {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <brand.icon className={cn("w-4 h-4 z-10", activeBrand === brand.id ? "text-white" : "text-slate-400")} />
+                <brand.icon className={cn("w-4 h-4 z-10", activeBrand === brand.id ? "text-white" : "text-slate-500")} />
                 <span className="z-10">{brand.label}</span>
               </button>
             ))}
-            <div className="w-px h-6 bg-slate-700 mx-2" />
+            <div className="w-px h-6 bg-slate-300 mx-2" />
             <button 
               onClick={() => setLang(lang === 'ES' ? 'EN' : 'ES')}
-              className="px-4 py-2 text-xs md:text-sm font-bold text-white hover:text-slate-300 transition-colors"
+              className="px-4 py-2 text-xs md:text-sm font-bold text-slate-700 hover:text-primary transition-colors"
             >
               {lang} | {lang === 'ES' ? 'EN' : 'ES'}
             </button>

@@ -41,10 +41,10 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
       <div className="max-w-7xl mx-auto w-full mt-10 md:mt-0">
         {/* Header */}
         <div className="text-center space-y-4 mb-12">
-          <h2 className="font-headline text-5xl md:text-6xl font-bold text-white tracking-tight">
+          <h2 className="font-headline text-5xl md:text-6xl font-bold text-slate-900 tracking-tight">
             {t.portalTitle}
           </h2>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
             {t.portalSubtitle}
           </p>
         </div>
@@ -64,7 +64,7 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
             return (
               <div
                 key={brand.slug}
-                className={`group relative bg-white/5 backdrop-blur-xl border border-white/10 ${borderClass} p-10 rounded-[2.5rem] flex flex-col items-center text-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 shadow-xl overflow-hidden`}
+                className={`group relative bg-white/40 backdrop-blur-xl border border-white/50 ${borderClass} p-10 rounded-[2.5rem] flex flex-col items-center text-center hover:bg-white/60 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 shadow-xl overflow-hidden`}
               >
                 {/* Arrow icon — top right */}
                 <Link
@@ -76,7 +76,7 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
                 </Link>
 
                 {/* Brand logo */}
-                <div className="bg-white/10 px-4 py-2 rounded-2xl shadow-sm mb-4 transition-transform group-hover:scale-110 flex items-center justify-center">
+                <div className="bg-white/80 px-4 py-2 rounded-2xl shadow-sm mb-4 transition-transform group-hover:scale-110 flex items-center justify-center">
                   <img
                     src={brand.logo_url || undefined}
                     alt={brand.name}
@@ -85,11 +85,11 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
                 </div>
 
                 {/* Brand info */}
-                <h3 className="text-2xl font-headline font-bold text-white mb-1">{brand.name}</h3>
+                <h3 className="text-2xl font-headline font-bold text-slate-900 mb-1">{brand.name}</h3>
                 <p className={`text-xs font-bold mb-3 uppercase tracking-widest ${accentClass}`}>
                   {l === 'es' ? brand.tagline_es : brand.tagline_en}
                 </p>
-                <p className="text-slate-300 text-sm leading-relaxed mb-6 font-light">
+                <p className="text-slate-600 text-sm leading-relaxed mb-6 font-light">
                   {l === 'es' ? brand.short_desc_es : brand.short_desc_en}
                 </p>
 
@@ -102,7 +102,7 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary hover:text-white transition-all shadow-sm"
+                        className="w-8 h-8 bg-white/60 rounded-full flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white transition-all shadow-sm"
                       >
                         <Instagram className="w-4 h-4" />
                       </a>
@@ -113,7 +113,7 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-slate-700 hover:text-white transition-all shadow-sm"
+                        className="w-8 h-8 bg-white/60 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-800 hover:text-white transition-all shadow-sm"
                       >
                         <TikTokIcon className="w-4 h-4" />
                       </a>
