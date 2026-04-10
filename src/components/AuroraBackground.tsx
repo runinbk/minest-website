@@ -6,13 +6,13 @@ import * as THREE from "three";
 import { useBrandStore, BrandType } from "@/store/useBrandStore";
 
 const brandColors: Record<BrandType, { primary: string; secondary: string }> = {
-  maines: { primary: "#335599", secondary: "#79DAEA" },
+  maines: { primary: "#94A3B8", secondary: "#335599" }, // Plomo/Azul
   dermclar: { primary: "#0088ff", secondary: "#00e5ff" },
   xtralife: { primary: "#00ff66", secondary: "#aeff00" },
   jetema: { primary: "#b026ff", secondary: "#ff26a5" },
 };
 
-function NeonShaderMaterial({ brand }: { brand: BrandType }) {
+function BlobShaderMaterial({ brand }: { brand: BrandType }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const targetColors = useMemo(() => {
     return {
@@ -33,9 +33,9 @@ function NeonShaderMaterial({ brand }: { brand: BrandType }) {
 
   useFrame((state, delta) => {
     if (!materialRef.current) return;
-    materialRef.current.uniforms.uTime.value += delta * 0.4;
+    materialRef.current.uniforms.uTime.value += delta * 0.3; // Slower, more elegant movement
     
-    // Suavizamos la transición usando lerp (interpolación)
+    // Suavizamos la transición de color de las manchas
     materialRef.current.uniforms.uColor1.value.lerp(targetColors.primary, 0.05);
     materialRef.current.uniforms.uColor2.value.lerp(targetColors.secondary, 0.05);
     
@@ -50,7 +50,7 @@ function NeonShaderMaterial({ brand }: { brand: BrandType }) {
     }
   `;
 
-  // Shader Fragment interactivo tipo Neon/Stitch
+  // Shader Fragment interactivo tipo VOS9X (Manchitas Metálicas con Ruido)
   const fragmentShader = `
     uniform float uTime;
     uniform vec3 uColor1;
@@ -89,35 +89,55 @@ function NeonShaderMaterial({ brand }: { brand: BrandType }) {
     }
 
     void main() {
+      // Normalizar coordenadas para mantener proporciones redondas
       vec2 st = gl_FragCoord.xy / uResolution.xy;
       st.x *= uResolution.x / uResolution.y;
-
-      vec2 q = vec2(0.);
-      q.x = snoise(st + uTime * 0.1);
-      q.y = snoise(st + vec2(1.0));
-
-      vec2 r = vec2(0.);
-      r.x = snoise(st + 1.0*q + vec2(1.7,9.2)+ 0.15*uTime );
-      r.y = snoise(st + 1.0*q + vec2(8.3,2.8)+ 0.126*uTime);
-
-      float f = snoise(st+r);
-
-      // Neon glowing flow
-      float flow = snoise(st * 1.5 + uTime * 0.2 + r * 1.5);
-      flow = smoothstep(0.0, 1.0, flow);
-
-      // Mix dark background with primary color 1 
-      vec3 bgDark = vec3(0.01, 0.02, 0.04);
-      vec3 col = mix(bgDark, uColor1 * 0.6, f);
       
-      // Mix bright neon lines using uColor2
-      col = mix(col, uColor2, flow * f * 1.8);
+      // Ajustamos el centro
+      vec2 center = vec2(0.5 * (uResolution.x / uResolution.y), 0.5);
 
-      // Strong metallic bloom / glow
-      float glow = pow(flow, 4.0) * 2.0;
-      col += uColor2 * glow;
+      float t = uTime;
 
-      gl_FragColor = vec4(col, 1.0);
+      // Definir 3 posiciones para las manchas (moviéndose en órbitas orgánicas)
+      vec2 p1 = center + vec2(sin(t * 0.8) * 0.4, cos(t * 0.5) * 0.3);
+      vec2 p2 = center + vec2(cos(t * 0.6) * 0.5, sin(t * 0.9) * 0.3);
+      vec2 p3 = center + vec2(sin(t * 0.4) * 0.3, cos(t * 0.7) * 0.4);
+
+      // Calculamos distancia de las manchas, y añadimos ruido a los bordes
+      float noise = snoise(st * 3.0 + t) * 0.15;
+      
+      float d1 = length(st - p1) + noise;
+      float d2 = length(st - p2) + snoise(st * 2.5 - t) * 0.15;
+      float d3 = length(st - p3) + snoise(st * 4.0 + t * 0.5) * 0.15;
+
+      // Glow falloff (difuminado de luz) -> Inverso Exponencial
+      float g1 = exp(-d1 * 4.0);
+      float g2 = exp(-d2 * 4.0);
+      float g3 = exp(-d3 * 4.0);
+
+      // Núcleo hiper brillante (Efecto metálico / plasma concentrado)
+      float core1 = exp(-d1 * 12.0);
+      float core2 = exp(-d2 * 12.0);
+      float core3 = exp(-d3 * 12.0);
+
+      // Color base para cada mancha, mezclando ligeramente con blanco puro en el núcleo
+      vec3 c1 = mix(uColor1, vec3(1.0), core1 * 0.8);
+      vec3 c2 = mix(uColor2, vec3(1.0), core2 * 0.8);
+      // La tercer mancha mezcla el color primario pero más tenue
+      vec3 c3 = mix(uColor1, vec3(1.0), core3 * 0.6);
+
+      // Sumamos todas las luces additive blending
+      vec3 col = (c1 * g1) + (c2 * g2) + (c3 * g3 * 0.6);
+
+      // Generación de granulado texturizado tipo VOS9X (Noise dither)
+      float grain = fract(sin(dot(vUv, vec2(12.9898, 78.233))) * 43758.5453) * 0.05;
+      
+      // Alpha se basa en la intensidad total de color (Para que el resto del canvas sea transparente)
+      float alpha = clamp((g1 + g2 + g3) * 1.5, 0.0, 1.0);
+      
+      col += grain * alpha; // Agregamos el noise solo donde hay color
+
+      gl_FragColor = vec4(col, alpha);
     }
   `;
 
@@ -129,6 +149,7 @@ function NeonShaderMaterial({ brand }: { brand: BrandType }) {
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
+        transparent={true} // Importante para permitir que el plomo de atrás se vea
         depthWrite={false}
         depthTest={false}
       />
@@ -140,14 +161,15 @@ export function AuroraBackground() {
   const activeBrand = useBrandStore((state) => state.activeBrand);
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#020617]">
+    // Removido bg-[#020617] para permitir el fondo por defecto (light mode)
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
       <Canvas
         camera={{ position: [0, 0, 1] }}
         dpr={[1, 2]}
-        gl={{ antialias: false, powerPreference: "high-performance" }}
+        gl={{ antialias: false, powerPreference: "high-performance", alpha: true }} // alpha true
         className="w-full h-full"
       >
-        <NeonShaderMaterial brand={activeBrand} />
+        <BlobShaderMaterial brand={activeBrand} />
       </Canvas>
     </div>
   );
