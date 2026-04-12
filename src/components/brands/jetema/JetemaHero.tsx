@@ -1,12 +1,9 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { ChevronDown } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { BrandRow } from '@/lib/supabase';
-import { useIsMobile } from '@/hooks/useIsMobile';
-
 import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface JetemaHeroProps {
@@ -14,12 +11,12 @@ interface JetemaHeroProps {
 }
 
 export function JetemaHero({ brand }: JetemaHeroProps) {
-  const { lang }    = useBrandStore();
-  const t           = translations[lang].jetema;
-  const l           = lang === 'ES' ? 'es' : 'en';
-  const isMobile    = useIsMobile();
+  const { lang } = useBrandStore();
+  const t = translations[lang].jetema;
+  const l = lang === 'ES' ? 'es' : 'en';
+  const isMobile = useIsMobile();
 
-  const tagline     = brand ? (l === 'es' ? brand.tagline_es    : brand.tagline_en)    : t.badge;
+  const tagline = brand ? (l === 'es' ? brand.tagline_es : brand.tagline_en) : t.badge;
   const description = brand ? (l === 'es' ? brand.description_es : brand.description_en) : t.hero.description;
 
   return (
@@ -48,22 +45,19 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
 
         {/* Brand logo */}
         {brand?.logo_url && (
-          <div className="flex justify-center -my-2 mb-2">
+          <div className="flex justify-center -my-2 mb-4">
             <img
               src={brand.logo_url}
               alt={brand.name}
-              className="h-16 md:h-20 w-auto object-contain drop-shadow-xl"
+              className="h-32 md:h-48 w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
             />
           </div>
         )}
 
         {/* Headline */}
         <div>
-          <h1 className="font-headline text-5xl md:text-7xl font-bold text-slate-900 tracking-tight leading-none">
-            {t.hero.title1}
-          </h1>
-          <h1 className="font-headline text-5xl md:text-7xl font-bold text-[#7C3AED] tracking-tight leading-none">
-            {t.hero.title2}
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight leading-snug">
+            {t.hero.title1} <span className="text-[#7C3AED]">{t.hero.title2}</span>
           </h1>
         </div>
 

@@ -32,22 +32,19 @@ export function DermclarHero({ brand }: DermclarHeroProps) {
 
         {/* Brand logo */}
         {brand?.logo_url && (
-          <div className="flex justify-center -my-2 mb-2">
+          <div className="flex justify-center -my-2 mb-4">
             <img
               src={brand.logo_url}
               alt={brand.name}
-              className="h-16 md:h-20 w-auto object-contain drop-shadow-xl"
+              className="h-32 md:h-48 w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
             />
           </div>
         )}
 
         {/* Headline */}
         <div>
-          <h1 className="font-headline text-5xl md:text-7xl font-bold text-slate-900 tracking-tight leading-none">
-            {t.hero.title1}
-          </h1>
-          <h1 className="font-headline text-5xl md:text-7xl font-bold text-[#38BDF8] tracking-tight leading-none">
-            {t.hero.title2}
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight leading-snug">
+            {t.hero.title1} <span className="text-[#38BDF8]">{t.hero.title2}</span>
           </h1>
         </div>
 
