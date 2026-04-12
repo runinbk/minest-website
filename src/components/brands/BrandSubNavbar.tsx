@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowLeft, Menu } from 'lucide-react';
+import { ArrowLeft, Menu, ChevronDown } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
@@ -33,13 +33,42 @@ export function BrandSubNavbar({ logoUrl, brandLogoUrl, brandName, navLinks }: B
         <span className="hidden md:inline">{t.backToHub}</span>
       </Link>
 
-      {/* Center: Brand identity */}
-      <div className="flex items-center gap-3">
+      {/* Center: Brand Switcher Dropdown */}
+      <div className="relative group flex items-center justify-center">
         {brandLogoUrl && (
-          <div className="bg-white/80 px-3 py-1 rounded-xl shadow-sm">
+          <div className="flex items-center gap-1.5 cursor-pointer bg-white/60 hover:bg-white/90 px-4 py-1.5 rounded-full shadow-sm transition-all border border-black/5">
             <img src={brandLogoUrl} alt={brandName} className="h-6 w-auto object-contain" />
+            <ChevronDown className="w-4 h-4 text-slate-500 transition-transform group-hover:rotate-180" />
           </div>
         )}
+
+        {/* Dropdown Menu */}
+        <div className="absolute top-full mt-2 w-48 bg-white/95 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
+          <Link
+            href="/jetema"
+            className={`block px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
+              brandName.toLowerCase() === 'jetema' ? 'bg-[#7C3AED]/10 text-[#7C3AED]' : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            Jetema
+          </Link>
+          <Link
+            href="/dermclar"
+            className={`block px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
+              brandName.toLowerCase() === 'dermclar' ? 'bg-[#38BDF8]/10 text-[#38BDF8]' : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            Dermclar
+          </Link>
+          <Link
+            href="/xtralife"
+            className={`block px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
+              brandName.toLowerCase() === 'xtralife' ? 'bg-[#06752E]/10 text-[#06752E]' : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            Xtralife
+          </Link>
+        </div>
       </div>
 
       {/* Right: Nav links + lang toggle */}

@@ -7,10 +7,7 @@ import { translations } from '@/lib/translations';
 import { BrandRow } from '@/lib/supabase';
 import { useIsMobile } from '@/hooks/useIsMobile';
 
-const JetemaHeroCanvas = dynamic(
-  () => import('@/components/3d/JetemaHeroCanvas'),
-  { ssr: false },
-);
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface JetemaHeroProps {
   brand: BrandRow | null;
@@ -28,7 +25,7 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
   return (
     <section
       id="hero"
-      className="relative pt-40 pb-20 px-6 min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative pt-40 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
     >
       {/* ── Mobile: fallback image behind text at low opacity ──────────────── */}
       {isMobile && (
@@ -42,64 +39,53 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
         </div>
       )}
 
-      {/* ── Desktop: 3-D canvas anchored to the right 45 % ─────────────────── */}
-      {!isMobile && (
-        <div className="absolute top-0 right-0 w-[45%] h-full pointer-events-none z-0">
-          <JetemaHeroCanvas />
-        </div>
-      )}
-
       {/* ── Text content ────────────────────────────────────────────────────── */}
-      <div className="relative z-10 max-w-5xl w-full">
-        <div className="max-w-xl space-y-6 md:text-left text-center">
-          {/* Badge */}
-          <div className="inline-block px-4 py-1.5 rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20 text-[#7C3AED] text-sm font-semibold tracking-wide uppercase">
-            {tagline}
+      <div className="relative z-10 max-w-5xl w-full text-center space-y-6">
+        {/* Badge */}
+        <div className="inline-block px-4 py-1.5 rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20 text-[#7C3AED] text-sm font-semibold tracking-wide uppercase">
+          {tagline}
+        </div>
+
+        {/* Brand logo */}
+        {brand?.logo_url && (
+          <div className="flex justify-center -my-2 mb-2">
+            <img
+              src={brand.logo_url}
+              alt={brand.name}
+              className="h-16 md:h-20 w-auto object-contain drop-shadow-xl"
+            />
           </div>
+        )}
 
-          {/* Brand logo */}
-          {brand?.logo_url && (
-            <div className="flex md:justify-start justify-center">
-              <div className="bg-white/60 backdrop-blur-sm px-8 py-4 rounded-3xl shadow-lg border border-white/60">
-                <img
-                  src={brand.logo_url}
-                  alt={brand.name}
-                  className="h-16 md:h-20 w-auto object-contain"
-                />
-              </div>
-            </div>
-          )}
+        {/* Headline */}
+        <div>
+          <h1 className="font-headline text-5xl md:text-7xl font-bold text-slate-900 tracking-tight leading-none">
+            {t.hero.title1}
+          </h1>
+          <h1 className="font-headline text-5xl md:text-7xl font-bold text-[#7C3AED] tracking-tight leading-none">
+            {t.hero.title2}
+          </h1>
+        </div>
 
-          {/* Headline */}
-          <div>
-            <h1 className="font-headline text-6xl md:text-8xl font-bold text-slate-900 tracking-tight leading-none">
-              {t.hero.title1}
-            </h1>
-            <h1 className="font-headline text-6xl md:text-8xl font-bold text-[#7C3AED] tracking-tight leading-none">
-              {t.hero.title2}
-            </h1>
-          </div>
+        {/* Description */}
+        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 font-light leading-relaxed">
+          {description}
+        </p>
 
-          {/* Description */}
-          <p className="text-lg md:text-xl text-slate-600 font-light leading-relaxed">
-            {description}
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap md:justify-start justify-center gap-4 pt-2">
-            <a
-              href="#catalogo"
-              className="px-8 py-4 bg-[#7C3AED] text-white rounded-full font-semibold shadow-xl shadow-[#7C3AED]/25 hover:scale-105 transition-transform"
-            >
-              {t.hero.cta1}
-            </a>
-            <a
-              href="#contacto"
-              className="px-8 py-4 bg-white/40 backdrop-blur-md border border-white/60 text-slate-900 rounded-full font-semibold hover:bg-white/60 transition-all"
-            >
-              {t.hero.cta2}
-            </a>
-          </div>
+        {/* CTAs */}
+        <div className="flex flex-wrap justify-center gap-4 pt-2">
+          <a
+            href="#catalogo"
+            className="px-8 py-4 bg-[#7C3AED] text-white rounded-full font-semibold shadow-xl shadow-[#7C3AED]/25 hover:scale-105 transition-transform"
+          >
+            {t.hero.cta1}
+          </a>
+          <a
+            href="#contacto"
+            className="px-8 py-4 bg-white/40 backdrop-blur-md border border-white/60 text-slate-900 rounded-full font-semibold hover:bg-white/60 transition-all"
+          >
+            {t.hero.cta2}
+          </a>
         </div>
       </div>
 

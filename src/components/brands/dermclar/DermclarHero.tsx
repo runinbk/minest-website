@@ -22,9 +22,9 @@ export function DermclarHero({ brand }: DermclarHeroProps) {
   return (
     <section
       id="hero"
-      className="relative pt-40 pb-20 px-6 min-h-screen flex flex-col items-center justify-center"
+      className="relative pt-40 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
     >
-      <div className="max-w-5xl w-full text-center space-y-6">
+      <div className="relative z-10 max-w-5xl w-full text-center space-y-6">
         {/* Badge */}
         <div className="inline-block px-4 py-1.5 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 text-[#38BDF8] text-sm font-semibold tracking-wide uppercase">
           {tagline}
@@ -32,23 +32,21 @@ export function DermclarHero({ brand }: DermclarHeroProps) {
 
         {/* Brand logo */}
         {brand?.logo_url && (
-          <div className="flex justify-center">
-            <div className="bg-white/60 backdrop-blur-sm px-8 py-4 rounded-3xl shadow-lg border border-white/60">
-              <img
-                src={brand.logo_url}
-                alt={brand.name}
-                className="h-16 md:h-20 w-auto object-contain"
-              />
-            </div>
+          <div className="flex justify-center -my-2 mb-2">
+            <img
+              src={brand.logo_url}
+              alt={brand.name}
+              className="h-16 md:h-20 w-auto object-contain drop-shadow-xl"
+            />
           </div>
         )}
 
         {/* Headline */}
         <div>
-          <h1 className="font-headline text-6xl md:text-8xl font-bold text-slate-900 tracking-tight leading-none">
+          <h1 className="font-headline text-5xl md:text-7xl font-bold text-slate-900 tracking-tight leading-none">
             {t.hero.title1}
           </h1>
-          <h1 className="font-headline text-6xl md:text-8xl font-bold text-[#38BDF8] tracking-tight leading-none">
+          <h1 className="font-headline text-5xl md:text-7xl font-bold text-[#38BDF8] tracking-tight leading-none">
             {t.hero.title2}
           </h1>
         </div>
