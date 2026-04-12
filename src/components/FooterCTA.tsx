@@ -7,14 +7,16 @@ import { Send, MapPin, Phone, Mail, Instagram, Facebook, ArrowRight, MessageCirc
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { SocialLinkRow } from '@/lib/supabase';
+import { InstagramBadge } from '@/components/shared/InstagramBadge';
 
 interface FooterCTAProps {
   siteConfig: Record<string, { es: string; en: string }>;
   socialLinks: SocialLinkRow[];
   logoUrl?: string;
+  instagramBadge?: { handle: string; url: string; color: string };
 }
 
-export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) {
+export function FooterCTA({ siteConfig, socialLinks, logoUrl, instagramBadge }: FooterCTAProps) {
   const { lang } = useBrandStore();
   const t = translations[lang].footer;
   const nav = translations[lang].nav;
@@ -53,9 +55,9 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) 
   const facebookLinks = socialLinks.filter((s) => s.platform === 'facebook');
 
   return (
-    <footer id="contacto" className="relative mt-12 pt-32 scroll-mt-40">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start px-6 mb-24 mt-8">
-        <div className="space-y-12">
+    <footer id="contacto" className="relative pt-12 flex flex-col min-h-screen justify-center">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-6 mb-16 mt-8">
+        <div className="space-y-8">
           <div className="space-y-6">
             <h2 className="font-headline text-5xl md:text-6xl font-bold text-primary leading-tight">
               {ctaTitle}
@@ -67,11 +69,20 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) 
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-emerald-500 text-white rounded-full font-semibold shadow-lg hover:bg-emerald-600 transition-all hover:scale-105"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#06752E] text-white rounded-full font-semibold shadow-lg hover:bg-[#06752E]/80 transition-all hover:scale-105"
             >
               <MessageCircle className="w-5 h-5" />
               {ctaBtnWa}
             </a>
+
+            {/* Instagram badge — shown when a brand handle is provided */}
+            {instagramBadge && (
+              <InstagramBadge
+                handle={instagramBadge.handle}
+                url={instagramBadge.url}
+                color={instagramBadge.color}
+              />
+            )}
           </div>
         </div>
 
@@ -136,8 +147,8 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) 
         </motion.div>
       </div>
 
-      <div className="bg-white/10 backdrop-blur-md border-t border-white/20 py-24 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="bg-white/10 backdrop-blur-md border-t border-white/20 py-10 px-6 mt-auto">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               {logoUrl && <img src={logoUrl} className="h-10 w-auto" alt="Maines" />}
@@ -155,7 +166,7 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) 
                   <Facebook className="w-4 h-4" />
                 </a>
               ))}
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/60 rounded-full flex items-center justify-center text-slate-600 hover:bg-emerald-500 hover:text-white transition-all shadow-sm">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/60 rounded-full flex items-center justify-center text-slate-600 hover:bg-[#06752E] hover:text-white transition-all shadow-sm">
                 <MessageCircle className="w-4 h-4" />
               </a>
             </div>
@@ -219,7 +230,7 @@ export function FooterCTA({ siteConfig, socialLinks, logoUrl }: FooterCTAProps) 
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-24 pt-8 border-t border-slate-200/60 flex justify-center items-center text-slate-500 text-sm">
+        <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-200/60 flex justify-center items-center text-slate-500 text-sm">
           <p>{copyright}</p>
         </div>
       </div>

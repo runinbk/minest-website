@@ -3,7 +3,7 @@ import { AuroraBackground } from '@/components/AuroraBackground';
 import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { CorporateGrid } from '@/components/CorporateGrid';
-import { BrandShowcase } from '@/components/BrandShowcase';
+import { BrandPortal } from '@/components/BrandPortal';
 import { FooterCTA } from '@/components/FooterCTA';
 import { supabase, buildConfigMap, SiteConfigRow, BrandRow, PillarRow, SocialLinkRow } from '@/lib/supabase';
 
@@ -32,34 +32,45 @@ export default async function Home() {
       {/* Fixed Aurora Background */}
       <AuroraBackground />
 
-      {/* Navbars (Mutating) */}
+      {/* Navbar corporativo */}
       <Navbar logoUrl={logoUrl} />
 
-      {/* Page Content */}
+      {/* Contenido del HUB */}
       <div className="relative z-10">
-        {/* 1. Hero */}
-        <section data-snap="always">
+
+        {/* 1. Hero corporativo */}
+        <section id="inicio">
           <Hero siteConfig={siteConfig} />
         </section>
 
-        {/* 2. BrandShowcase — primero las marcas */}
-        <section data-snap>
-          <BrandShowcase brands={brands} socialLinks={socialLinks} />
+        {/* 2. Portal de Marcas — enlaza a /jetema, /dermclar, /xtralife */}
+        <section id="marcas">
+          <BrandPortal brands={brands} socialLinks={socialLinks} />
         </section>
 
-        {/* 3. CorporateGrid — después el por qué elegirnos */}
-        <section data-snap>
+        {/* 3. Nosotros — 4 pilares + misión/visión */}
+        <section id="nosotros">
           <div className="container mx-auto px-4 md:px-0">
             <CorporateGrid pillars={pillars} siteConfig={siteConfig} />
           </div>
         </section>
 
-        {/* 4. FooterCTA */}
-        <section data-snap="always">
+        {/* 4. Contacto / Footer */}
+        <section id="contacto">
           <div className="container mx-auto px-4 md:px-0">
-            <FooterCTA siteConfig={siteConfig} socialLinks={socialLinks} logoUrl={logoUrl} />
+            <FooterCTA
+              siteConfig={siteConfig}
+              socialLinks={socialLinks}
+              logoUrl={logoUrl}
+              instagramBadge={{
+                handle: '@mainessrl',
+                url: 'https://www.instagram.com/mainessrl/',
+                color: '#1B3A6B',
+              }}
+            />
           </div>
         </section>
+
       </div>
     </main>
   );
