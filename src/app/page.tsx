@@ -43,16 +43,16 @@ export default async function Home() {
           <Hero siteConfig={siteConfig} />
         </section>
 
-        {/* 2. Nosotros — 4 pilares + misión/visión */}
+        {/* 2. Portal de Marcas — enlaza a /jetema, /dermclar, /xtralife */}
+        <section id="marcas">
+          <BrandPortal brands={brands} socialLinks={socialLinks} />
+        </section>
+
+        {/* 3. Nosotros — 4 pilares + misión/visión */}
         <section id="nosotros">
           <div className="container mx-auto px-4 md:px-0">
             <CorporateGrid pillars={pillars} siteConfig={siteConfig} />
           </div>
-        </section>
-
-        {/* 3. Portal de Marcas — enlaza a /jetema, /dermclar, /xtralife */}
-        <section id="marcas">
-          <BrandPortal brands={brands} socialLinks={socialLinks} />
         </section>
 
         {/* 4. Contacto / Footer */}

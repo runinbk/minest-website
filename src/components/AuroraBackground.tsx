@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { useBrandStore, BrandType } from "@/store/useBrandStore";
 
 const brandColors: Record<BrandType, { primary: string; secondary: string }> = {
-  maines: { primary: "#94A3B8", secondary: "#335599" }, // Plomo/Azul
+  maines: { primary: "#065cc4", secondary: "#06bad2" }, // Azul vibrante y Cyan
   dermclar: { primary: "#0088ff", secondary: "#00e5ff" },
   xtralife: { primary: "#00ff66", secondary: "#aeff00" },
   jetema: { primary: "#b026ff", secondary: "#ff26a5" },
@@ -33,12 +33,12 @@ function BlobShaderMaterial({ brand }: { brand: BrandType }) {
 
   useFrame((state, delta) => {
     if (!materialRef.current) return;
-    materialRef.current.uniforms.uTime.value += delta * 0.3; // Slower, more elegant movement
-    
+    materialRef.current.uniforms.uTime.value += delta * 0.25; // Movimiento más suave y flotante
+
     // Suavizamos la transición de color de las manchas
     materialRef.current.uniforms.uColor1.value.lerp(targetColors.primary, 0.05);
     materialRef.current.uniforms.uColor2.value.lerp(targetColors.secondary, 0.05);
-    
+
     materialRef.current.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
   });
 
@@ -50,7 +50,7 @@ function BlobShaderMaterial({ brand }: { brand: BrandType }) {
     }
   `;
 
-  // Shader Fragment interactivo tipo VOS9X (Manchitas Metálicas con Ruido)
+  // Shader Fragment Suave (Manchitas Extendidas, sin agresividad metálica)
   const fragmentShader = `
     uniform float uTime;
     uniform vec3 uColor1;
@@ -90,52 +90,43 @@ function BlobShaderMaterial({ brand }: { brand: BrandType }) {
 
     void main() {
       // Normalizar coordenadas para mantener proporciones redondas
+      float aspect = uResolution.x / uResolution.y;
       vec2 st = gl_FragCoord.xy / uResolution.xy;
-      st.x *= uResolution.x / uResolution.y;
+      st.x *= aspect;
       
-      // Ajustamos el centro
-      vec2 center = vec2(0.5 * (uResolution.x / uResolution.y), 0.5);
-
+      vec2 center = vec2(0.5 * aspect, 0.5);
       float t = uTime;
 
-      // Definir 3 posiciones para las manchas (moviéndose en órbitas orgánicas)
-      vec2 p1 = center + vec2(sin(t * 0.8) * 0.4, cos(t * 0.5) * 0.3);
-      vec2 p2 = center + vec2(cos(t * 0.6) * 0.5, sin(t * 0.9) * 0.3);
-      vec2 p3 = center + vec2(sin(t * 0.4) * 0.3, cos(t * 0.7) * 0.4);
+      // Órbitas muy extensas para que naveguen por toda la pantalla (costados y esquinas)
+      vec2 p1 = center + vec2(sin(t * 0.7) * 0.6 * aspect, cos(t * 0.5) * 0.4);
+      vec2 p2 = center + vec2(cos(t * 0.5) * 0.7 * aspect, sin(t * 0.6) * 0.45);
+      vec2 p3 = center + vec2(sin(t * 0.3) * 0.8 * aspect, cos(t * 0.8) * 0.35);
 
-      // Calculamos distancia de las manchas, y añadimos ruido a los bordes
-      float noise = snoise(st * 3.0 + t) * 0.15;
+      // Distorsión sutil en los bordes para mantener toque orgánico pero suave
+      float noise1 = snoise(st * 2.0 + t * 0.5) * 0.08;
+      float noise2 = snoise(st * 2.2 - t * 0.4) * 0.08;
+      float noise3 = snoise(st * 1.8 + t * 0.6) * 0.08;
       
-      float d1 = length(st - p1) + noise;
-      float d2 = length(st - p2) + snoise(st * 2.5 - t) * 0.15;
-      float d3 = length(st - p3) + snoise(st * 4.0 + t * 0.5) * 0.15;
+      float d1 = length(st - p1) + noise1;
+      float d2 = length(st - p2) + noise2;
+      float d3 = length(st - p3) + noise3;
 
-      // Glow falloff (difuminado de luz) -> Inverso Exponencial
-      float g1 = exp(-d1 * 4.0);
-      float g2 = exp(-d2 * 4.0);
-      float g3 = exp(-d3 * 4.0);
+      // Difuminación más amplia y suave
+      float g1 = exp(-d1 * 2.8);
+      float g2 = exp(-d2 * 3.2);
+      float g3 = exp(-d3 * 3.5);
 
-      // Núcleo hiper brillante (Efecto metálico / plasma concentrado)
-      float core1 = exp(-d1 * 12.0);
-      float core2 = exp(-d2 * 12.0);
-      float core3 = exp(-d3 * 12.0);
+      // Colores puros y suaves, sin el blanco metálico fuerte en el centro
+      vec3 col = (uColor1 * g1) + (uColor2 * g2) + (mix(uColor1, uColor2, 0.5) * g3);
 
-      // Color base para cada mancha, mezclando ligeramente con blanco puro en el núcleo
-      vec3 c1 = mix(uColor1, vec3(1.0), core1 * 0.8);
-      vec3 c2 = mix(uColor2, vec3(1.0), core2 * 0.8);
-      // La tercer mancha mezcla el color primario pero más tenue
-      vec3 c3 = mix(uColor1, vec3(1.0), core3 * 0.6);
-
-      // Sumamos todas las luces additive blending
-      vec3 col = (c1 * g1) + (c2 * g2) + (c3 * g3 * 0.6);
-
-      // Generación de granulado texturizado tipo VOS9X (Noise dither)
-      float grain = fract(sin(dot(vUv, vec2(12.9898, 78.233))) * 43758.5453) * 0.05;
+      // Textura VOS9X texturizada refinada (menos agresiva)
+      float grain = fract(sin(dot(vUv, vec2(12.9898, 78.233))) * 43758.5453) * 0.025;
       
-      // Alpha se basa en la intensidad total de color (Para que el resto del canvas sea transparente)
-      float alpha = clamp((g1 + g2 + g3) * 1.5, 0.0, 1.0);
+      // Control de opacidad delicado para que el fondo plomito respire (máximo 60%)
+      float alpha = (g1 + g2 + g3);
+      alpha = smoothstep(0.0, 1.5, alpha) * 0.65;
       
-      col += grain * alpha; // Agregamos el noise solo donde hay color
+      col += grain * alpha; // Agregamos ligero ruido a los bloques
 
       gl_FragColor = vec4(col, alpha);
     }
