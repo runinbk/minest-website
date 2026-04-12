@@ -65,9 +65,13 @@ export function Hero({ siteConfig }: HeroProps) {
     <section
       id="inicio"
       ref={containerRef}
-      className="relative pt-40 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center"
+      className="relative pt-40 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
     >
-      <div className="max-w-5xl w-full text-center space-y-5 relative">
+      {/* 
+        Reducimos el contenedor central en pantallas medias (lg/xl) para que el texto 
+        no ocupe tanta anchura horizontal y las tarjetas laterales puedan respirar sin solaparse 
+      */}
+      <div className="w-full text-center space-y-5 relative max-w-3xl xl:max-w-4xl 2xl:max-w-5xl z-10">
         {/* Badge — framer-motion entrance kept as-is */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -158,10 +162,10 @@ export function Hero({ siteConfig }: HeroProps) {
           <div
             key={idx}
             className={cn(
-              'hero-stat absolute',
-              idx === 0 && 'top-[25%] left-[5%]',
-              idx === 1 && 'top-[40%] right-[8%]',
-              idx === 2 && 'bottom-[20%] left-[12%]',
+              'hero-stat absolute z-0',
+              idx === 0 && 'top-[15%] left-[2%] xl:top-[20%] xl:left-[5%] 2xl:left-[8%]',
+              idx === 1 && 'top-[35%] right-[2%] xl:top-[40%] xl:right-[6%] 2xl:right-[8%]',
+              idx === 2 && 'bottom-[12%] left-[6%] xl:bottom-[20%] xl:left-[12%]',
             )}
           >
             <motion.div
@@ -172,14 +176,14 @@ export function Hero({ siteConfig }: HeroProps) {
                 ease: 'easeInOut',
                 delay: idx * 0.5,
               }}
-              className="bg-white/30 backdrop-blur-xl border border-white/50 p-6 rounded-2xl shadow-2xl flex flex-col items-center gap-2"
+              className="bg-white/30 backdrop-blur-xl border border-white/50 p-4 xl:p-6 rounded-xl xl:rounded-2xl shadow-xl xl:shadow-2xl flex flex-col items-center gap-1 xl:gap-2 transition-all duration-300 transform lg:scale-90 xl:scale-100 origin-center"
             >
-              <div className="w-12 h-12 bg-white/50 rounded-xl flex items-center justify-center text-primary shadow-inner">
-                <stat.icon className="w-6 h-6" />
+              <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white/50 rounded-lg xl:rounded-xl flex items-center justify-center text-primary shadow-inner">
+                <stat.icon className="w-5 h-5 xl:w-6 xl:h-6" />
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold font-headline text-slate-900">{stat.value}</div>
-                <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">{stat.text}</div>
+                <div className="text-xl xl:text-2xl font-bold font-headline text-slate-900">{stat.value}</div>
+                <div className="text-[10px] xl:text-xs font-medium text-slate-500 uppercase tracking-wider">{stat.text}</div>
               </div>
             </motion.div>
           </div>

@@ -22,9 +22,9 @@ export function XtralifeHero({ brand }: XtralifeHeroProps) {
   return (
     <section
       id="hero"
-      className="relative pt-40 pb-20 px-6 min-h-screen flex flex-col items-center justify-center"
+      className="relative pt-40 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
     >
-      <div className="max-w-5xl w-full text-center space-y-6">
+      <div className="relative z-10 max-w-5xl w-full text-center space-y-6">
         {/* Badge */}
         <div className="inline-block px-4 py-1.5 rounded-full bg-[#06752E]/10 border border-[#5DF878]/30 text-[#06752E] text-sm font-semibold tracking-wide uppercase">
           {tagline}
@@ -32,24 +32,19 @@ export function XtralifeHero({ brand }: XtralifeHeroProps) {
 
         {/* Brand logo */}
         {brand?.logo_url && (
-          <div className="flex justify-center">
-            <div className="bg-white/60 backdrop-blur-sm px-8 py-4 rounded-3xl shadow-lg border border-white/60">
-              <img
-                src={brand.logo_url}
-                alt={brand.name}
-                className="h-16 md:h-20 w-auto object-contain"
-              />
-            </div>
+          <div className="flex justify-center -my-2 mb-4">
+            <img
+              src={brand.logo_url}
+              alt={brand.name}
+              className="h-32 md:h-48 w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+            />
           </div>
         )}
 
         {/* Headline */}
         <div>
-          <h1 className="font-headline text-6xl md:text-8xl font-bold text-slate-900 tracking-tight leading-none">
-            {t.hero.title1}
-          </h1>
-          <h1 className="font-headline text-6xl md:text-8xl font-bold text-[#06752E] tracking-tight leading-none">
-            {t.hero.title2}
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight leading-snug">
+            {t.hero.title1} <span className="text-[#06752E]">{t.hero.title2}</span>
           </h1>
         </div>
 
