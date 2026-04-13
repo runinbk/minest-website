@@ -56,13 +56,13 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
 
         {/* Headline */}
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight leading-snug">
-            {t.hero.title1} <span className="text-[#7C3AED]">{t.hero.title2}</span>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white tracking-tight leading-snug">
+            {t.hero.title1} <span className="text-[#7C3AED] dark:text-[#a78bfa]">{t.hero.title2}</span>
           </h1>
         </div>
 
         {/* Description */}
-        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 font-light leading-relaxed">
+        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 dark:text-slate-300 font-light leading-relaxed">
           {description}
         </p>
 
@@ -76,7 +76,7 @@ export function JetemaHero({ brand }: JetemaHeroProps) {
           </a>
           <a
             href="#contacto"
-            className="px-8 py-4 bg-white/40 backdrop-blur-md border border-white/60 text-slate-900 rounded-full font-semibold hover:bg-white/60 transition-all"
+            className="px-8 py-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/60 dark:border-white/10 text-slate-900 dark:text-white rounded-full font-semibold hover:bg-white/60 dark:hover:bg-slate-800/80 transition-all"
           >
             {t.hero.cta2}
           </a>

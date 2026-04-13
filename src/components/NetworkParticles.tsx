@@ -5,10 +5,13 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { type Container, type ISourceOptions } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { useBrandStore } from "@/store/useBrandStore";
+import { useTheme } from "next-themes";
 
 export function NetworkParticles() {
   const [init, setInit] = useState(false);
   const { activeBrand } = useBrandStore();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -19,19 +22,21 @@ export function NetworkParticles() {
     });
   }, []);
 
-  const particleColor = useMemo(() => {
+  const brandConfig = useMemo(() => {
     switch (activeBrand) {
       case "jetema":
-        return "#a78bfa"; // vibrant purple
+        return { lightParticle: "#7e22ce", darkParticle: "#a78bfa", glow: "167,139,250" }; // violet/purple
       case "dermclar":
-        return "#38bdf8"; // sky blue
+        return { lightParticle: "#0369a1", darkParticle: "#38bdf8", glow: "56,189,248" }; // blue/cyan
       case "xtralife":
-        return "#34d399"; // emerald green
+        return { lightParticle: "#15803d", darkParticle: "#34d399", glow: "52,211,153" }; // emerald
       default:
-        // Maines / Default - Tipo turquesa solicitado
-        return "#00e5ff"; 
+        // Maines / Default - Turquesa
+        return { lightParticle: "#0891b2", darkParticle: "#00e5ff", glow: "0,229,255" };
     }
   }, [activeBrand]);
+
+  const particleColor = isDark ? brandConfig.darkParticle : brandConfig.lightParticle;
 
   const options: ISourceOptions = useMemo(
     () => ({
@@ -76,8 +81,8 @@ export function NetworkParticles() {
           color: particleColor,
           distance: 150,
           enable: true,
-          opacity: 0.3,
-          width: 1,
+          opacity: isDark ? 0.3 : 0.6,
+          width: isDark ? 1 : 2, // Más gruesas en modo claro
         },
         move: {
           direction: "none",
@@ -93,7 +98,7 @@ export function NetworkParticles() {
           density: {
             enable: true,
           },
-          value: 150, // Ligeramente más puntos para llenar el centro
+          value: 180, // Aún más densas al centro
         },
         opacity: {
           value: 0.6,
@@ -114,10 +119,17 @@ export function NetworkParticles() {
 
   return (
     <div className="absolute inset-0 w-full h-full bg-stone-50 dark:bg-[#03090c] overflow-hidden transition-colors duration-500">
-      {/* Resplandor radial central turquesa suave */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.05)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.12)_0%,transparent_60%)] z-0 pointer-events-none" />
+      {/* Resplandor radial central adaptado a la marca actual */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none transition-all duration-700" 
+        style={{
+          background: isDark 
+            ? `radial-gradient(circle at center, rgba(${brandConfig.glow},0.12) 0%, transparent 60%)` 
+            : `radial-gradient(circle at center, rgba(${brandConfig.glow},0.05) 0%, transparent 60%)`
+        }}
+      />
       
-      {/* Máscara tipo viñeta para oscurecer los bordes y enfocar la tensión lumínica al centro */}
+      {/* Máscara tipo viñeta para oscurecer/aclarar los bordes y enfocar la tensión lumínica al centro */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,theme(colors.stone.50)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_20%,#03090c_100%)] z-10 pointer-events-none" />
       
       <Particles
