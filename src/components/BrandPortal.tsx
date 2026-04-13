@@ -1,10 +1,30 @@
 "use client";
 
+import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Instagram } from 'lucide-react';
+import { ArrowUpRight, Instagram, ChevronRight } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { BrandRow, SocialLinkRow } from '@/lib/supabase';
+import { gsap, useGSAP } from '@/lib/gsap-setup';
+
+interface BrandPortalProps {
+  brands: BrandRow[];
+  socialLinks: SocialLinkRow[];
+}
+
+const brandAccent: Record<string, string> = {
+  jetema:   '#7C3AED',
+  dermclar: '#38BDF8',
+  xtralife: '#06752E',
+};
+
+// Temp placeholder images
+const tempImages: Record<string, string> = {
+  jetema:   'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2070&auto=format&fit=crop',
+  dermclar: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1974&auto=format&fit=crop',
+  xtralife: 'https://images.unsplash.com/photo-1542382156909-9ae37b3f56eb?q=80&w=1980&auto=format&fit=crop',
+};
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -14,95 +34,134 @@ function TikTokIcon({ className }: { className?: string }) {
   );
 }
 
-const brandAccent: Record<string, string> = {
-  dermclar: 'text-[#38BDF8]',
-  xtralife: 'text-[#06752E]',
-  jetema:   'text-[#7C3AED]',
-};
-
-const brandBorder: Record<string, string> = {
-  dermclar: 'hover:border-[#38BDF8]/40',
-  xtralife: 'hover:border-[#5DF878]/50',
-  jetema:   'hover:border-[#7C3AED]/40',
-};
-
-interface BrandPortalProps {
-  brands: BrandRow[];
-  socialLinks: SocialLinkRow[];
-}
-
 export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
+  
   const { lang } = useBrandStore();
   const t = translations[lang].subBrands;
   const l = lang === 'ES' ? 'es' : 'en';
 
+  useGSAP(() => {
+    // ScrollTrigger to pin the section for a full-screen experience
+    // We pin it for a duration of 50vh to give the user time to appreciate it
+    // then it unpins and scroll continues normally.
+    gsap.to(containerRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=600",
+        pin: true,
+        scrub: false,
+        anticipatePin: 1
+      }
+    });
+
+    // Reveal animation when entering
+    gsap.from(".brand-panel-content", {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top center",
+      },
+      y: 50,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: "power3.out"
+    });
+
+  }, { scope: containerRef });
+
   return (
-    <section id="marcas" className="relative min-h-[90vh] py-16 px-6 flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto w-full mt-10 md:mt-0">
-        {/* Header */}
-        <div className="text-center space-y-4 mb-12">
-          <h2 className="font-headline text-5xl md:text-6xl font-bold text-slate-900 tracking-tight">
-            {t.portalTitle}
-          </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
-            {t.portalSubtitle}
-          </p>
-        </div>
+    <div 
+      ref={containerRef} 
+      className="w-full h-screen relative bg-black overflow-hidden flex flex-col md:flex-row"
+    >
+      {brands.map((brand) => {
+        const isHovered = hoveredBrand === brand.slug;
+        const brandInsta = socialLinks.find(s => s.platform === 'instagram' && s.label.toLowerCase().includes(brand.slug));
+        const brandTiktok = socialLinks.find(s => s.platform === 'tiktok' && s.label.toLowerCase().includes(brand.slug));
+        
+        const accentColor = brandAccent[brand.slug] ?? '#00e5ff';
+        const bgImage = tempImages[brand.slug] ?? tempImages.jetema;
 
-        {/* Brand cards — link to sub-pages */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {brands.map((brand) => {
-            const brandInsta = socialLinks.find(
-              (s) => s.platform === 'instagram' && s.label.toLowerCase().includes(brand.slug)
-            );
-            const brandTiktok = socialLinks.find(
-              (s) => s.platform === 'tiktok' && s.label.toLowerCase().includes(brand.slug)
-            );
-            const accentClass = brandAccent[brand.slug] ?? 'text-primary';
-            const borderClass = brandBorder[brand.slug] ?? 'hover:border-primary/30';
+        return (
+          <Link
+            href={`/${brand.slug}`}
+            key={brand.slug}
+            onMouseEnter={() => setHoveredBrand(brand.slug)}
+            onMouseLeave={() => setHoveredBrand(null)}
+            className="group relative flex-1 min-h-[33vh] md:min-h-full border-b md:border-b-0 md:border-r border-white/10 last:border-0 overflow-hidden cursor-pointer"
+            style={{
+              transition: 'flex 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
+              flex: hoveredBrand ? (isHovered ? 1.6 : 0.7) : 1
+            }}
+          >
+            {/* Background Image Overlay */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out z-0"
+              style={{ backgroundImage: `url(${bgImage})`, transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
+            />
+            
+            {/* Gradient Overlay for legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 z-10 transition-opacity duration-500" style={{ opacity: isHovered ? 0.7 : 0.9 }} />
 
-            return (
-              <div
-                key={brand.slug}
-                className={`group relative bg-white/40 backdrop-blur-xl border border-white/50 ${borderClass} p-10 rounded-[2.5rem] flex flex-col items-center text-center hover:bg-white/60 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 shadow-xl overflow-hidden`}
-              >
-                {/* Arrow icon — top right */}
-                <Link
-                  href={`/${brand.slug}`}
-                  className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                  aria-label={`Ir a ${brand.name}`}
-                >
-                  <ArrowUpRight className={`w-6 h-6 ${accentClass}`} />
-                </Link>
-
-                {/* Brand logo */}
-                <div className="bg-white/80 px-4 py-2 rounded-2xl shadow-sm mb-4 transition-transform group-hover:scale-110 flex items-center justify-center">
-                  <img
-                    src={brand.logo_url || undefined}
-                    alt={brand.name}
-                    className="h-16 w-auto object-contain"
-                  />
+            {/* Content Container */}
+            <div className="brand-panel-content relative z-20 w-full h-full p-8 md:p-12 flex flex-col items-center md:items-start justify-end md:justify-center">
+              
+              {/* Logo / Title Block */}
+              <div className="flex flex-col items-center md:items-start w-full transform transition-transform duration-500" style={{ y: isHovered ? -10 : 0 }}>
+                <div className="h-14 md:h-20 bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/5 mb-6 flex items-center justify-center">
+                   {brand.logo_url ? (
+                    <img src={brand.logo_url} alt={brand.name} className="h-full w-auto object-contain" />
+                  ) : (
+                    <span className="text-white font-bold text-2xl tracking-widest uppercase">{brand.name}</span>
+                  )}
                 </div>
-
-                {/* Brand info */}
-                <h3 className="text-2xl font-headline font-bold text-slate-900 mb-1">{brand.name}</h3>
-                <p className={`text-xs font-bold mb-3 uppercase tracking-widest ${accentClass}`}>
+                
+                <h3 className="text-3xl md:text-5xl font-headline font-bold text-white mb-2 text-center md:text-left drop-shadow-lg">
+                  {brand.name}
+                </h3>
+                
+                <p 
+                  className="text-xs md:text-sm font-bold uppercase tracking-widest mb-4 transition-colors duration-300"
+                  style={{ color: accentColor }}
+                >
                   {l === 'es' ? brand.tagline_es : brand.tagline_en}
                 </p>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6 font-light">
+
+                <p className="text-white/70 text-sm md:text-base leading-relaxed md:max-w-sm text-center md:text-left opacity-0 md:opacity-100 hidden md:block" style={{
+                  transition: 'all 0.4s ease',
+                  opacity: isHovered ? 1 : 0.5,
+                  transform: isHovered ? 'translateY(0)' : 'translateY(10px)'
+                }}>
                   {l === 'es' ? brand.short_desc_es : brand.short_desc_en}
                 </p>
+              </div>
+
+              {/* Action Button & Socials - Revelead strictly on hover on Desktop */}
+              <div 
+                className="w-full mt-6 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-500"
+                style={{ 
+                  opacity: isHovered ? 1 : 0, 
+                  transform: isHovered ? 'translateY(0)' : 'translateY(20px)',
+                  pointerEvents: isHovered ? 'auto' : 'none' 
+                }}
+              >
+                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-semibold text-sm hover:scale-105 transition-transform">
+                  {t.visitBrand} <ArrowUpRight className="w-4 h-4" />
+                </div>
 
                 {/* Social links */}
                 {(brandInsta || brandTiktok) && (
-                  <div className="flex gap-3 mb-6">
+                  <div className="flex gap-2">
                     {brandInsta && (
                       <a
                         href={brandInsta.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="w-8 h-8 bg-white/60 rounded-full flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white transition-all shadow-sm"
+                        className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
                       >
                         <Instagram className="w-4 h-4" />
                       </a>
@@ -113,27 +172,27 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="w-8 h-8 bg-white/60 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-800 hover:text-white transition-all shadow-sm"
+                        className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
                       >
                         <TikTokIcon className="w-4 h-4" />
                       </a>
                     )}
                   </div>
                 )}
-
-                {/* CTA link to sub-page */}
-                <Link
-                  href={`/${brand.slug}`}
-                  className={`mt-4 inline-flex items-center gap-2 font-bold text-sm ${accentClass} hover:gap-3 transition-all`}
-                >
-                  {t.visitBrand}
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
               </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+              
+            </div>
+            
+            {/* Visual Indicator arrow on the right side for desktop */}
+            <div 
+              className="absolute right-6 top-1/2 -translate-y-1/2 text-white/50 hidden md:flex opacity-0 transition-opacity duration-300"
+              style={{ opacity: isHovered ? 0 : 1 }}
+            >
+              <ChevronRight className="w-8 h-8 opacity-50" />
+            </div>
+          </Link>
+        );
+      })}
+    </div>
   );
 }

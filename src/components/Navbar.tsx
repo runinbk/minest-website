@@ -175,6 +175,54 @@ export function Navbar({ logoUrl }: NavbarProps) {
           </motion.nav>
         )}
       </AnimatePresence>
+
+      {/* Floating Burger Menu when standard Nav is hidden */}
+      <AnimatePresence>
+        {hidden && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: 20 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.8, x: 20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-6 right-6 z-50 hidden md:block" // Solo lo mostramos en Desktop porque en mobile ya suele haber menos espacio vertical o ya tienen gestos. (Opcionalmente quitar hidden md:block para mobile)
+          >
+            <Sheet>
+              <SheetTrigger asChild>
+                <button className="p-3 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-xl rounded-full text-slate-800 dark:text-slate-200 hover:bg-white/80 dark:hover:bg-slate-800 transition-all">
+                  <Menu className="w-6 h-6" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl">
+                <SheetHeader className="sr-only">
+                  <SheetTitle>Navigation Menu</SheetTitle>
+                  <SheetDescription>Access Maines corporate sections</SheetDescription>
+                </SheetHeader>
+                <div className="flex flex-col gap-6 mt-12">
+                  <div className="flex items-center gap-2 mb-4">
+                    <img src={logoSrc} className="h-10 w-auto" alt="Maines" />
+                    <span className="text-lg font-bold text-yellow-600">Maines S.R.L.</span>
+                  </div>
+                  {navLinks.map((item) => (
+                    <a key={item.label} href={item.href} className="text-2xl font-headline font-bold text-slate-800 dark:text-white text-left hover:text-primary transition-colors">
+                      {item.label}
+                    </a>
+                  ))}
+                  <button 
+                    onClick={() => setLang(lang === 'ES' ? 'EN' : 'ES')}
+                    className="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 py-4 rounded-2xl font-bold mt-4 transition-colors"
+                  >
+                    {lang} | {lang === 'ES' ? 'EN' : 'ES'}
+                  </button>
+                  
+                  <div className="flex justify-center mt-4">
+                    <ThemeToggle />
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
