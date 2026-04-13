@@ -152,8 +152,6 @@ function BlobShaderMaterial({ brand }: { brand: BrandType }) {
 }
 
 export function AuroraBackground() {
-  const activeBrand = useBrandStore((state) => state.activeBrand);
-  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => setMounted(true), []);
@@ -162,25 +160,16 @@ export function AuroraBackground() {
     return <div className="fixed inset-0 z-0 bg-stone-50/50 pointer-events-none" />;
   }
 
-  const isDark = resolvedTheme === "dark";
-
   return (
     <div 
-      className={`fixed inset-0 z-0 overflow-hidden ${isDark ? "" : "pointer-events-none"}`} 
+      className="fixed inset-0 z-0 overflow-hidden" 
       aria-hidden="true"
     >
-      {isDark ? (
-        <NetworkParticles />
-      ) : (
-        <Canvas
-          camera={{ position: [0, 0, 1] }}
-          dpr={[1, 2]}
-          gl={{ antialias: false, powerPreference: "high-performance", alpha: true }}
-          className="w-full h-full"
-        >
-          <BlobShaderMaterial brand={activeBrand} />
-        </Canvas>
-      )}
+      {/* 
+        Temporalmente Forzado a NetworkParticles en AMBOS modos a petición del cliente 
+        para pre-visualizar cómo se ve la red interactiva en fondo claro / oscuro 
+      */}
+      <NetworkParticles />
     </div>
   );
 }

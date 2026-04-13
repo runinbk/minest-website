@@ -28,8 +28,8 @@ export function NetworkParticles() {
       case "xtralife":
         return "#34d399"; // emerald green
       default:
-        // Maines / Default
-        return "#0ea5e9"; // cyan/blue
+        // Maines / Default - Tipo turquesa solicitado
+        return "#00e5ff"; 
     }
   }, [activeBrand]);
 
@@ -93,7 +93,7 @@ export function NetworkParticles() {
           density: {
             enable: true,
           },
-          value: 120, // Enough density to look like a thick web
+          value: 150, // Ligeramente más puntos para llenar el centro
         },
         opacity: {
           value: 0.6,
@@ -113,13 +113,17 @@ export function NetworkParticles() {
   if (!init) return null;
 
   return (
-    <div className="absolute inset-0 w-full h-full bg-[#0a0a0a] overflow-hidden">
-      {/* Soft radial gradient mask over the dark bg so it looks deep */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/80 z-10 pointer-events-none" />
+    <div className="absolute inset-0 w-full h-full bg-stone-50 dark:bg-[#03090c] overflow-hidden transition-colors duration-500">
+      {/* Resplandor radial central turquesa suave */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.05)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.12)_0%,transparent_60%)] z-0 pointer-events-none" />
+      
+      {/* Máscara tipo viñeta para oscurecer los bordes y enfocar la tensión lumínica al centro */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,theme(colors.stone.50)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_20%,#03090c_100%)] z-10 pointer-events-none" />
+      
       <Particles
         id="tsparticles"
         options={options}
-        className="w-full h-full"
+        className="absolute inset-0 z-0"
       />
     </div>
   );
