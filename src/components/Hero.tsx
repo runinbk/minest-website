@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Calendar, Layers, MapPin } from 'lucide-react';
+import { Calendar, Layers, MapPin, ChevronDown } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { gsap, useGSAP } from '@/lib/gsap-setup';
 
@@ -65,7 +65,7 @@ export function Hero({ siteConfig }: HeroProps) {
     <section
       id="inicio"
       ref={containerRef}
-      className="relative pt-40 pb-20 px-6 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
+      className="relative pt-40 pb-20 px-6 h-screen min-h-[600px] flex flex-col items-center justify-center overflow-hidden w-full"
     >
       {/* 
         Reducimos el contenedor central en pantallas medias (lg/xl) para que el texto 
@@ -189,6 +189,21 @@ export function Hero({ siteConfig }: HeroProps) {
           </div>
         ))}
       </div>
+
+      {/* ── Scroll Down Indicator ────────────────────────────────── */}
+      <motion.button
+        onClick={() => document.getElementById('marcas')?.scrollIntoView({ behavior: 'smooth' })}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-8 z-20 flex flex-col items-center justify-center gap-2 cursor-pointer text-slate-400 hover:text-primary transition-colors focus:outline-none"
+        aria-label="Ir a Marcas"
+      >
+        <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold opacity-80">{lang === 'ES' ? 'Deslizar hacia abajo' : 'Scroll Down'}</span>
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
+          <ChevronDown className="w-6 h-6" />
+        </motion.div>
+      </motion.button>
     </section>
   );
 }
