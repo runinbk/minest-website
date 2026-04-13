@@ -61,7 +61,10 @@ export function DermclarHero({ brand }: DermclarHeroProps) {
           >
             {t.hero.cta1}
           </a>
-            className="px-8 py-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/60 dark:border-white/10 text-slate-900 dark:text-white rounded-full font-semibold hover:bg-white/60 dark:hover:bg-slate-800/80 transition-all"
+          <a
+            href="#contacto"
+            className="px-8 py-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/60 dark:border-white/10 text-slate-900 dark:text-white rounded-full font-semibold hover:bg-white/60 dark:hover:bg-slate-800/80 transition-all font-headline"
+          >
             {t.hero.cta2}
           </a>
         </div>
