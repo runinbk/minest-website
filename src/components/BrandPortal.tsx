@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowUpRight, Instagram, ChevronRight } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
@@ -37,6 +38,7 @@ function TikTokIcon({ className }: { className?: string }) {
 export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
+  const router = useRouter();
   
   const { lang } = useBrandStore();
   const t = translations[lang].subBrands;
@@ -86,9 +88,9 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
         const bgImage = tempImages[brand.slug] ?? tempImages.jetema;
 
         return (
-          <Link
-            href={`/${brand.slug}`}
+          <div
             key={brand.slug}
+            onClick={() => router.push(`/${brand.slug}`)}
             onMouseEnter={() => setHoveredBrand(brand.slug)}
             onMouseLeave={() => setHoveredBrand(null)}
             className="group relative flex-1 min-h-[33vh] md:min-h-full border-b md:border-b-0 md:border-r border-white/10 last:border-0 overflow-hidden cursor-pointer"
@@ -190,7 +192,7 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
             >
               <ChevronRight className="w-8 h-8 opacity-50" />
             </div>
-          </Link>
+          </div>
         );
       })}
     </div>
