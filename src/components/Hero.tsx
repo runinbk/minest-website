@@ -105,7 +105,7 @@ export function Hero({ siteConfig }: HeroProps) {
           GSAP's useGSAP (scoped to containerRef) targets these spans.
           No framer-motion on these elements — GSAP has full ownership.
         */}
-        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 font-light leading-relaxed">
+        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 dark:text-slate-300 font-light leading-relaxed">
           {words.map((word, i) => (
             <span
               key={i}
@@ -122,7 +122,7 @@ export function Hero({ siteConfig }: HeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-xl mx-auto text-base text-slate-500 font-light"
+          className="max-w-xl mx-auto text-base text-slate-500 dark:text-slate-400 font-light"
         >
           {headline}
         </motion.p>
@@ -142,7 +142,7 @@ export function Hero({ siteConfig }: HeroProps) {
           </a>
           <a
             href="#contacto"
-            className="px-8 py-4 bg-white/40 backdrop-blur-md border border-white/60 text-slate-900 rounded-full font-semibold hover:bg-white/60 transition-all text-center"
+            className="px-8 py-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/60 dark:border-slate-800/60 text-slate-900 dark:text-white rounded-full font-semibold hover:bg-white/60 dark:hover:bg-slate-800/60 transition-all text-center"
           >
             {lang === 'ES' ? 'Contacto' : 'Contact'}
           </a>
@@ -176,14 +176,14 @@ export function Hero({ siteConfig }: HeroProps) {
                 ease: 'easeInOut',
                 delay: idx * 0.5,
               }}
-              className="bg-white/30 backdrop-blur-xl border border-white/50 p-4 xl:p-6 rounded-xl xl:rounded-2xl shadow-xl xl:shadow-2xl flex flex-col items-center gap-1 xl:gap-2 transition-all duration-300 transform lg:scale-90 xl:scale-100 origin-center"
+              className="bg-white/30 dark:bg-slate-900/40 backdrop-blur-xl border border-white/50 dark:border-slate-800/60 p-4 xl:p-6 rounded-xl xl:rounded-2xl shadow-xl xl:shadow-2xl flex flex-col items-center gap-1 xl:gap-2 transition-all duration-300 transform lg:scale-90 xl:scale-100 origin-center"
             >
-              <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white/50 rounded-lg xl:rounded-xl flex items-center justify-center text-primary shadow-inner">
+              <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white/50 dark:bg-slate-800/50 rounded-lg xl:rounded-xl flex items-center justify-center text-primary shadow-inner">
                 <stat.icon className="w-5 h-5 xl:w-6 xl:h-6" />
               </div>
               <div className="text-center">
-                <div className="text-xl xl:text-2xl font-bold font-headline text-slate-900">{stat.value}</div>
-                <div className="text-[10px] xl:text-xs font-medium text-slate-500 uppercase tracking-wider">{stat.text}</div>
+                <div className="text-xl xl:text-2xl font-bold font-headline text-slate-900 dark:text-white">{stat.value}</div>
+                <div className="text-[10px] xl:text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{stat.text}</div>
               </div>
             </motion.div>
           </div>

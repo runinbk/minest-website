@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Activity, ShieldCheck, HeartPulse, Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { translations } from '@/lib/translations';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const brands = [
   { id: 'dermclar', label: 'Dermclar', icon: Activity },
@@ -82,6 +83,10 @@ export function Navbar({ logoUrl }: NavbarProps) {
                 {lang} | {lang === 'ES' ? 'EN' : 'ES'}
               </button>
               
+              <div className="hidden sm:block">
+                <ThemeToggle />
+              </div>
+              
               <div className="md:hidden">
                 <Sheet>
                   <SheetTrigger asChild>
@@ -110,6 +115,10 @@ export function Navbar({ logoUrl }: NavbarProps) {
                       >
                         {lang} | {lang === 'ES' ? 'EN' : 'ES'}
                       </button>
+                      
+                      <div className="flex justify-center mt-4">
+                        <ThemeToggle />
+                      </div>
                     </div>
                   </SheetContent>
                 </Sheet>
@@ -155,6 +164,7 @@ export function Navbar({ logoUrl }: NavbarProps) {
             >
               {lang} | {lang === 'ES' ? 'EN' : 'ES'}
             </button>
+            <ThemeToggle />
             <button 
               onClick={() => setActiveBrand('maines')}
               className="ml-1 p-2.5 hover:bg-white/40 rounded-full transition-colors flex items-center gap-2"

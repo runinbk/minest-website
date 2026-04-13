@@ -7,6 +7,7 @@ import { ArrowLeft, Menu, ChevronDown } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface BrandSubNavbarProps {
   logoUrl?: string;
@@ -117,6 +118,10 @@ export function BrandSubNavbar({ logoUrl, brandLogoUrl, brandName, navLinks }: B
           >
             {lang} | {lang === 'ES' ? 'EN' : 'ES'}
           </button>
+          
+          <div className="hidden sm:block">
+            <ThemeToggle />
+          </div>
 
           <div className="md:hidden">
             <Sheet>
@@ -150,6 +155,9 @@ export function BrandSubNavbar({ logoUrl, brandLogoUrl, brandName, navLinks }: B
                   >
                     {lang} | {lang === 'ES' ? 'EN' : 'ES'}
                   </button>
+                  <div className="flex justify-center mt-4">
+                    <ThemeToggle />
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
