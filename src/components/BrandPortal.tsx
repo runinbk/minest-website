@@ -7,7 +7,6 @@ import { ArrowUpRight, Instagram, ChevronRight } from 'lucide-react';
 import { useBrandStore } from '@/store/useBrandStore';
 import { translations } from '@/lib/translations';
 import { BrandRow, SocialLinkRow } from '@/lib/supabase';
-import { gsap, useGSAP } from '@/lib/gsap-setup';
 
 interface BrandPortalProps {
   brands: BrandRow[];
@@ -43,46 +42,12 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
   const { lang } = useBrandStore();
   const t = translations[lang].subBrands;
   const l = lang === 'ES' ? 'es' : 'en';
-
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=1200",
-        pin: true,
-        scrub: 1,
-        snap: {
-          snapTo: [0, 1],
-          duration: { min: 0.3, max: 0.8 },
-          ease: "power2.inOut"
-        }
-      }
-    });
-
-    tl.to(".intro-text", { opacity: 0, scale: 1.1, duration: 1 })
-      .fromTo(".brand-panel-wrapper", 
-        { yPercent: 100 }, 
-        { yPercent: 0, duration: 1, ease: "power2.inOut" },
-        "<" 
-      );
-  }, { scope: containerRef });
-
   return (
-    <div 
-      ref={containerRef} 
-      className="w-full h-screen relative bg-[#03090c] overflow-hidden"
+    <div
+      id="marcas"
+      ref={containerRef}
+      className="w-full h-screen relative bg-transparent overflow-hidden flex flex-col md:flex-row"
     >
-      {/* ── Intro Text Layer ── */}
-      <div className="intro-text absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
-        <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white tracking-tight text-center px-6 leading-tight max-w-4xl font-headline drop-shadow-xl">
-          {lang === 'ES' ? 'Te presentamos nuestras marcas exclusivas' : 'Introducing our exclusive brands'}
-        </h2>
-      </div>
-
-      {/* ── Brands Layer ── */}
-      <div className="brand-panel-wrapper absolute inset-0 flex flex-col md:flex-row z-20 overflow-hidden" style={{ transform: 'translateY(100%)' }}>
-
       {brands.map((brand) => {
         const isHovered = hoveredBrand === brand.slug;
         const brandInsta = socialLinks.find(s => s.platform === 'instagram' && s.label.toLowerCase().includes(brand.slug));
@@ -199,7 +164,6 @@ export function BrandPortal({ brands, socialLinks }: BrandPortalProps) {
           </div>
         );
       })}
-      </div>
     </div>
   );
 }

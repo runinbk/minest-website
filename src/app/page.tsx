@@ -39,14 +39,10 @@ export default async function Home() {
       <div className="relative z-10">
 
         {/* 1. Hero corporativo */}
-        <section id="inicio">
-          <Hero siteConfig={siteConfig} />
-        </section>
+        <Hero siteConfig={siteConfig} />
 
         {/* 2. Portal de Marcas — enlaza a /jetema, /dermclar, /xtralife */}
-        <section id="marcas">
-          <BrandPortal brands={brands} socialLinks={socialLinks} />
-        </section>
+        <BrandPortal brands={brands} socialLinks={socialLinks} />
 
         {/* 3. Nosotros — 4 pilares + misión/visión */}
         <section id="nosotros">
