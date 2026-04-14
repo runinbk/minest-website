@@ -4,6 +4,9 @@ import { useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useBrandStore, BrandType } from "@/store/useBrandStore";
+import { useTheme } from "next-themes";
+import { NetworkParticles } from "./NetworkParticles";
+import { useEffect, useState } from "react";
 
 const brandColors: Record<BrandType, { primary: string; secondary: string }> = {
   maines: { primary: "#065cc4", secondary: "#06bad2" }, // Azul vibrante y Cyan
@@ -149,19 +152,24 @@ function BlobShaderMaterial({ brand }: { brand: BrandType }) {
 }
 
 export function AuroraBackground() {
-  const activeBrand = useBrandStore((state) => state.activeBrand);
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) {
+    return <div className="fixed inset-0 z-0 bg-stone-50/50 pointer-events-none" />;
+  }
 
   return (
-    // Removido bg-[#020617] para permitir el fondo por defecto (light mode)
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      <Canvas
-        camera={{ position: [0, 0, 1] }}
-        dpr={[1, 2]}
-        gl={{ antialias: false, powerPreference: "high-performance", alpha: true }} // alpha true
-        className="w-full h-full"
-      >
-        <BlobShaderMaterial brand={activeBrand} />
-      </Canvas>
+    <div 
+      className="fixed inset-0 z-0 overflow-hidden" 
+      aria-hidden="true"
+    >
+      {/* 
+        Temporalmente Forzado a NetworkParticles en AMBOS modos a petición del cliente 
+        para pre-visualizar cómo se ve la red interactiva en fondo claro / oscuro 
+      */}
+      <NetworkParticles />
     </div>
   );
 }
